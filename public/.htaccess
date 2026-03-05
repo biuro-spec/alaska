@@ -1,0 +1,72 @@
+# ============================================================
+# Alaska RP — .htaccess Security + SPA Routing
+# ============================================================
+
+# ─── SPA Routing (React Router) ─────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# ─── Security Headers ────────────────────────────────────────
+<IfModule mod_headers.c>
+
+  # Blokuje osadzanie strony w iframe (ochrona przed clickjackingiem)
+  Header always set X-Frame-Options "DENY"
+
+  # Blokuje MIME sniffing — przeglądarka nie może zgadywać typu pliku
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Ogranicza informacje o źródle żądania wysyłane do zewnętrznych serwisów
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Wyłącza nieużywane API przeglądarki (kamera, mikrofon, GPS itp.)
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+
+  # Kontrola pamięci podręcznej dla pliku HTML — zawsze świeży
+  <FilesMatch "\.html$">
+    Header always set Cache-Control "no-cache, no-store, must-revalidate"
+    Header always set Pragma "no-cache"
+    Header always set Expires "0"
+  </FilesMatch>
+
+  # Cache dla zasobów statycznych (JS, CSS, obrazy)
+  <FilesMatch "\.(js|css|png|jpg|jpeg|webp|svg|woff2|woff|ttf)$">
+    Header always set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # HSTS — wymusza HTTPS (zakomentowane do czasu wdrożenia certyfikatu SSL)
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Content Security Policy — ogranicza dozwolone źródła treści
+  Header always set Content-Security-Policy "\
+    default-src 'self'; \
+    script-src 'self' 'unsafe-inline'; \
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; \
+    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; \
+    img-src 'self' data: https://alaskarp.pl; \
+    connect-src 'self'; \
+    frame-ancestors 'none'; \
+    form-action 'self'; \
+    base-uri 'self'; \
+    object-src 'none'"
+
+</IfModule>
+
+# ─── Kompresja GZIP ──────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# ─── Blokada dostępu do plików konfiguracyjnych ──────────────
+<FilesMatch "(\.env|\.git|composer\.(json|lock)|package(-lock)?\.json)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# ─── Ukrycie wersji serwera ──────────────────────────────────
+ServerSignature Off
