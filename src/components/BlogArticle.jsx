@@ -34,7 +34,7 @@ const BlogArticle = memo(() => {
         if (descMeta) descMeta.content = article.excerpt;
 
         const canonical = document.querySelector('link[rel="canonical"]');
-        if (canonical) canonical.href = `https://alaskarp.pl/blog/${article.slug}`;
+        if (canonical) canonical.href = `https://alaska-rp.pl/blog/${article.slug}`;
 
         // OG tags
         const ogTitle = document.querySelector('meta[property="og:title"]');
@@ -42,7 +42,7 @@ const BlogArticle = memo(() => {
         const ogDesc = document.querySelector('meta[property="og:description"]');
         if (ogDesc) ogDesc.content = article.excerpt;
         const ogUrl = document.querySelector('meta[property="og:url"]');
-        if (ogUrl) ogUrl.content = `https://alaskarp.pl/blog/${article.slug}`;
+        if (ogUrl) ogUrl.content = `https://alaska-rp.pl/blog/${article.slug}`;
 
         // Schema.org Article
         const schema = document.createElement('script');
@@ -53,14 +53,14 @@ const BlogArticle = memo(() => {
             "@type": "Article",
             "headline": article.title,
             "description": article.excerpt,
-            "url": `https://alaskarp.pl/blog/${article.slug}`,
+            "url": `https://alaska-rp.pl/blog/${article.slug}`,
             "author": { "@type": "Organization", "name": "Alaska - Chłodnictwo i Klimatyzacja" },
             "publisher": {
                 "@type": "Organization",
                 "name": "Alaska - Chłodnictwo i Klimatyzacja",
-                "logo": { "@type": "ImageObject", "url": "https://alaskarp.pl/logo.png" }
+                "logo": { "@type": "ImageObject", "url": "https://alaska-rp.pl/logo.png" }
             },
-            "mainEntityOfPage": `https://alaskarp.pl/blog/${article.slug}`
+            "mainEntityOfPage": `https://alaska-rp.pl/blog/${article.slug}`
         });
         document.head.appendChild(schema);
 

@@ -19,12 +19,12 @@ const BlogPage = memo(() => {
         const descMeta = document.querySelector('meta[name="description"]');
         if (descMeta) descMeta.content = 'Baza wiedzy Alaska Racibórz — porady, poradniki i aktualności z branży klimatyzacji, chłodnictwa i pomp ciepła.';
         const canonical = document.querySelector('link[rel="canonical"]');
-        if (canonical) canonical.href = 'https://alaskarp.pl/blog';
+        if (canonical) canonical.href = 'https://alaska-rp.pl/blog';
 
         return () => {
             document.title = 'Alaska - Klimatyzacja i Chłodnictwo | Racibórz, Śląsk';
             if (descMeta) descMeta.content = 'Alaska Racibórz — profesjonalna klimatyzacja i chłodnictwo przemysłowe. Montaż, serwis i wypożyczalnia od 1997 roku. Autoryzowany partner LG, Rotenso, Mitsubishi.';
-            if (canonical) canonical.href = 'https://alaskarp.pl/';
+            if (canonical) canonical.href = 'https://alaska-rp.pl/';
         };
     }, [location]);
 
