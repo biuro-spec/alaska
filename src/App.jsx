@@ -54,7 +54,7 @@ const Navigation = ({ scrolled }) => {
   return (
     <nav className={`nav ${scrolled ? 'nav-scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`}>
       <div className="container nav-content">
-        <Link to="/" className="logo" aria-label="Alaska RP Logo" onClick={closeMenu}>
+        <Link to="/" className="logo" aria-label="Alaska RP Logo" onClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
           <div className="logo-glass">
             <img src="/logo.png" alt="Alaska Logo" className="logo-img" />
           </div>

@@ -2663,7 +2663,7 @@ figcaption {
 }
 
 @media (max-width: 768px) {
-    .intro-name-flow { font-size: 2.22rem; flex-direction: column; gap: 0.5rem; }
+    .intro-name-flow { font-size: 2.22rem; flex-direction: column; gap: 0.5rem; align-items: center; }
     .intro-logo { width: 180px; height: 180px; padding: 10px; }
 }
 
