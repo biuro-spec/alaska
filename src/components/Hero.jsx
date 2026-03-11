@@ -11,7 +11,7 @@ const Hero = memo(() => {
     return (
         <header
             className="hero"
-            style={{ '--hero-bg': `url('/hero-refrigeration.png')` }}
+            style={{ '--hero-bg': `url('/hero-refrigeration.webp')` }}
         >
             <div className="container hero-container">
                 <div className={`hero-glass-card reveal ${loaded ? 'reveal-visible' : ''}`}>

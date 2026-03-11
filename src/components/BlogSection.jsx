@@ -4,10 +4,10 @@ import blogArticles from '../data/blogArticles';
 
 // Nowe, dedykowane zdjęcia do kart
 const categoryImages = {
-    'Klimatyzacja': '/images/blog-karta-klimatyzacja.png',
-    'Pompy ciepła': '/images/blog-karta-pompy.png',
-    'Chłodnictwo': '/images/blog-karta-chlodnictwo.png',
-    'Porady': '/images/blog-porady.png',
+    'Klimatyzacja': '/images/blog-karta-klimatyzacja.webp',
+    'Pompy ciepła': '/images/blog-karta-pompy.webp',
+    'Chłodnictwo': '/images/blog-karta-chlodnictwo.webp',
+    'Porady': '/images/blog-porady.webp',
 };
 
 const categoryIcons = {
@@ -41,7 +41,7 @@ const BlogSection = memo(() => {
 
                 <div className="blog-grid-home">
                     {featured.map((article) => {
-                        const img = categoryImages[article.category] || '/images/blog-klimatyzacja.jpg';
+                        const img = categoryImages[article.category] || '/images/blog-klimatyzacja.webp';
                         const icon = categoryIcons[article.category] || 'fa-newspaper';
                         return (
                             <Link

@@ -1,21 +1,23 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import './App.css'
 
-// Component Imports
+// Critical components (above the fold)
 import Hero from './components/Hero'
 import Stats from './components/Stats'
-import Services from './components/Services'
-import Salon from './components/Salon'
 import About from './components/About'
-import FAQ from './components/FAQ'
-import ContactForm from './components/ContactForm'
+import Services from './components/Services'
 import Footer from './components/Footer'
-import BlogPage from './components/BlogPage'
-import BlogArticle from './components/BlogArticle'
-import IntroScreen from './components/IntroScreen'
-import BlogSection from './components/BlogSection'
-import CookieConsent from './components/CookieConsent';
+
+// Lazy-loaded components (below the fold / route-based)
+const BlogSection = lazy(() => import('./components/BlogSection'))
+const Salon = lazy(() => import('./components/Salon'))
+const FAQ = lazy(() => import('./components/FAQ'))
+const ContactForm = lazy(() => import('./components/ContactForm'))
+const BlogPage = lazy(() => import('./components/BlogPage'))
+const BlogArticle = lazy(() => import('./components/BlogArticle'))
+const IntroScreen = lazy(() => import('./components/IntroScreen'))
+const CookieConsent = lazy(() => import('./components/CookieConsent'))
 
 const FloatingButtons = ({ visible }) => (
   <div className={`floating-btns ${visible ? 'floating-btns-visible' : ''}`}>
@@ -92,37 +94,39 @@ function HomePage() {
       <Stats />
       <About />
       <Services />
-      <BlogSection />
-      <Salon />
-      <FAQ />
+      <Suspense fallback={null}>
+        <BlogSection />
+        <Salon />
+        <FAQ />
 
-      <section id="kontakt" className="contact-light">
-        <div className="container contact-grid-main">
-          <div className="contact-text">
-            <h2>Skontaktuj się z nami</h2>
-            <p>Masz pytania? Chcesz zamówić darmową wycenę? Jesteśmy do Twojej dyspozycji.</p>
+        <section id="kontakt" className="contact-light">
+          <div className="container contact-grid-main">
+            <div className="contact-text">
+              <h2>Skontaktuj się z nami</h2>
+              <p>Masz pytania? Chcesz zamówić darmową wycenę? Jesteśmy do Twojej dyspozycji.</p>
 
-            <div className="contact-methods">
-              <div className="method-card">
-                <i className="fa-solid fa-phone"></i>
-                <h3>Zadzwoń</h3>
-                <p>607 044 336</p>
-              </div>
-              <div className="method-card">
-                <i className="fa-solid fa-envelope"></i>
-                <h3>Napisz email</h3>
-                <p>alaskarp@tlen.pl</p>
-              </div>
-              <div className="method-card">
-                <i className="fa-solid fa-location-dot"></i>
-                <h3>Adres biura</h3>
-                <p>ul. Rudzka 53/18, Racibórz</p>
+              <div className="contact-methods">
+                <div className="method-card">
+                  <i className="fa-solid fa-phone"></i>
+                  <h3>Zadzwoń</h3>
+                  <p>607 044 336</p>
+                </div>
+                <div className="method-card">
+                  <i className="fa-solid fa-envelope"></i>
+                  <h3>Napisz email</h3>
+                  <p>alaskarp@tlen.pl</p>
+                </div>
+                <div className="method-card">
+                  <i className="fa-solid fa-location-dot"></i>
+                  <h3>Adres biura</h3>
+                  <p>ul. Rudzka 53/18, Racibórz</p>
+                </div>
               </div>
             </div>
+            <ContactForm />
           </div>
-          <ContactForm />
-        </div>
-      </section>
+        </section>
+      </Suspense>
     </main>
   );
 }
@@ -169,18 +173,20 @@ function App() {
 
   return (
     <div className="app">
-      {showIntro && <IntroScreen onEnter={() => setShowIntro(false)} />}
+      {showIntro && <Suspense fallback={null}><IntroScreen onEnter={() => setShowIntro(false)} /></Suspense>}
       <HashScrollHandler />
       <Navigation scrolled={scrolled} />
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/blog/:slug" element={<BlogArticle />} />
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogArticle />} />
+        </Routes>
+      </Suspense>
 
       <Footer />
-      <CookieConsent />
+      <Suspense fallback={null}><CookieConsent /></Suspense>
       <FloatingButtons visible={scrolled} />
     </div>
   )

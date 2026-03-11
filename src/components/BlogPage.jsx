@@ -23,11 +23,11 @@ const BlogPage = memo(() => {
 
     const getHeroImage = (category) => {
         switch (category) {
-            case 'Klimatyzacja': return '/images/blog-porady.png';
-            case 'Pompy ciepła': return '/images/blog-chlodnictwo.jpg';
-            case 'Chłodnictwo': return '/images/blog-pompy.jpg';
-            case 'Porady': return '/images/blog-klimatyzacja.jpg';
-            default: return '/images/blog-klimatyzacja.jpg';
+            case 'Klimatyzacja': return '/images/blog-porady.webp';
+            case 'Pompy ciepła': return '/images/blog-chlodnictwo.webp';
+            case 'Chłodnictwo': return '/images/blog-pompy.webp';
+            case 'Porady': return '/images/blog-klimatyzacja.webp';
+            default: return '/images/blog-klimatyzacja.webp';
         }
     };
 
@@ -83,7 +83,7 @@ const BlogPage = memo(() => {
                             </div>
                             <div className="blog-featured-image">
                                 <img
-                                    src="/images/featured-ac.png"
+                                    src="/images/featured-ac.webp"
                                     alt="Nowoczesny klimatyzator"
                                     className="featured-ac-img"
                                 />

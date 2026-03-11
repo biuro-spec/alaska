@@ -48,11 +48,11 @@ const BlogArticle = memo(() => {
 
     const getHeroImage = (category) => {
         switch (category) {
-            case 'Klimatyzacja': return '/images/blog-klimatyzacja.jpg';
-            case 'Pompy ciepła': return '/images/blog-pompy.jpg';
-            case 'Chłodnictwo': return '/images/blog-chlodnictwo.jpg';
-            case 'Porady': return '/images/blog-porady.png';
-            default: return '/images/blog-klimatyzacja.jpg';
+            case 'Klimatyzacja': return '/images/blog-klimatyzacja.webp';
+            case 'Pompy ciepła': return '/images/blog-pompy.webp';
+            case 'Chłodnictwo': return '/images/blog-chlodnictwo.webp';
+            case 'Porady': return '/images/blog-porady.webp';
+            default: return '/images/blog-klimatyzacja.webp';
         }
     };
 
