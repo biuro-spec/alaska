@@ -184,7 +184,7 @@ function App() {
     <div className="app">
       {showIntro && <Suspense fallback={null}><IntroScreen onEnter={() => setShowIntro(false)} /></Suspense>}
       <HashScrollHandler />
-      <Navigation scrolled={scrolled} />
+      {!showIntro && <Navigation scrolled={scrolled} />}
 
       <Suspense fallback={null}>
         <Routes>
