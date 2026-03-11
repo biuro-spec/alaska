@@ -150,14 +150,26 @@ function HashScrollHandler() {
 
 function App() {
   const [scrolled, setScrolled] = useState(false)
-  const [showIntro, setShowIntro] = useState(true)
+  const [showIntro, setShowIntro] = useState(() => {
+    // Skip intro if user already visited this session
+    if (sessionStorage.getItem('alaska_intro_seen')) return false
+    return true
+  })
 
   useEffect(() => {
     if (showIntro) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
+      sessionStorage.setItem('alaska_intro_seen', '1')
     }
+  }, [showIntro])
+
+  // Auto-dismiss intro after 4s for Lighthouse/bots
+  useEffect(() => {
+    if (!showIntro) return
+    const timer = setTimeout(() => setShowIntro(false), 4000)
+    return () => clearTimeout(timer)
   }, [showIntro])
 
   useEffect(() => {
