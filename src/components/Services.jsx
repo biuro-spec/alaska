@@ -144,10 +144,6 @@ const Services = memo(() => {
                 const targetService = services.find(s => s.title === map[hash]);
                 if (targetService) {
                     setActiveService(targetService);
-                    setTimeout(() => {
-                        const el = document.getElementById('oferta');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
                 }
             }
         };
