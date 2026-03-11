@@ -21,6 +21,58 @@ const BlogArticle = memo(() => {
         window.scrollTo(0, 0);
     }, [slug]);
 
+    // Dynamic SEO meta tags
+    useEffect(() => {
+        if (!article) return;
+        const originalTitle = document.title;
+        const originalDesc = document.querySelector('meta[name="description"]')?.content;
+        const originalCanonical = document.querySelector('link[rel="canonical"]')?.href;
+
+        document.title = `${article.title} | Alaska Klimatyzacja Racibórz`;
+
+        const descMeta = document.querySelector('meta[name="description"]');
+        if (descMeta) descMeta.content = article.excerpt;
+
+        const canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) canonical.href = `https://alaskarp.pl/blog/${article.slug}`;
+
+        // OG tags
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.content = article.title;
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc) ogDesc.content = article.excerpt;
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) ogUrl.content = `https://alaskarp.pl/blog/${article.slug}`;
+
+        // Schema.org Article
+        const schema = document.createElement('script');
+        schema.type = 'application/ld+json';
+        schema.id = 'article-schema';
+        schema.textContent = JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": article.title,
+            "description": article.excerpt,
+            "url": `https://alaskarp.pl/blog/${article.slug}`,
+            "author": { "@type": "Organization", "name": "Alaska - Chłodnictwo i Klimatyzacja" },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Alaska - Chłodnictwo i Klimatyzacja",
+                "logo": { "@type": "ImageObject", "url": "https://alaskarp.pl/logo.png" }
+            },
+            "mainEntityOfPage": `https://alaskarp.pl/blog/${article.slug}`
+        });
+        document.head.appendChild(schema);
+
+        return () => {
+            document.title = originalTitle;
+            if (descMeta && originalDesc) descMeta.content = originalDesc;
+            if (canonical && originalCanonical) canonical.href = originalCanonical;
+            const oldSchema = document.getElementById('article-schema');
+            if (oldSchema) oldSchema.remove();
+        };
+    }, [article]);
+
     if (!article) {
         return (
             <div className="blog-page">

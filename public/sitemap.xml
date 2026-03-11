@@ -1,13 +1,111 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://alaskarp.pl/</loc>
-    <lastmod>2026-03-04</lastmod>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://alaskarp.pl/blog</loc>
-    <lastmod>2026-03-04</lastmod>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/klimatyzacja-do-domu-jak-wybrac</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/montaz-klimatyzacji-raciborz-co-warto-wiedziec</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/serwis-klimatyzacji-jak-czesto-i-dlaczego</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/klimatyzacja-lg-rotenso-mitsubishi-porownanie</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/klimatyzacja-multi-split-wiele-pokojow</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/pompy-ciepla-co-to-jest-i-jak-dziala</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/dofinansowanie-czyste-powietrze-pompa-ciepla</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/pompa-ciepla-a-ogrzewanie-podlogowe</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/chlodnictwo-przemyslowe-komory-chlodnicze</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/chlodzenie-sklepow-i-gastronomii</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/jak-oszczedzac-na-klimatyzacji</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/klimatyzacja-a-zdrowie-alergeny-czystość-powietrza</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/wypozyczalnia-klimatyzatorow-raciborz</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/oczyszczacz-powietrza-czy-warto-kupic</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/klimatyzacja-w-bloku-formalnosci-i-montaz</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alaskarp.pl/blog/przygotowanie-klimatyzacji-do-sezonu</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 </urlset>
