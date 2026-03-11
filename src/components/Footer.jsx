@@ -13,7 +13,7 @@ const Footer = memo(() => (
                 <div className="footer-brand">
                     <div className="footer-logo">
                         <div className="logo-glass">
-                            <img src="/logo.webp" alt="Alaska Logo" className="logo-img" />
+                            <img src="/logo.png" alt="Alaska Logo" className="logo-img" />
                         </div>
                     </div>
                     <p className="footer-desc">
