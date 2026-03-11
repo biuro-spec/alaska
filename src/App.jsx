@@ -56,7 +56,7 @@ const Navigation = ({ scrolled }) => {
       <div className="container nav-content">
         <Link to="/" className="logo" aria-label="Alaska RP Logo" onClick={closeMenu}>
           <div className="logo-glass">
-            <img src="/logo.png" alt="Alaska Logo" className="logo-img" />
+            <img src="/logo.webp" alt="Alaska Logo" className="logo-img" />
           </div>
         </Link>
         <div className={`nav-links ${menuOpen ? 'nav-links-visible' : ''}`}>
