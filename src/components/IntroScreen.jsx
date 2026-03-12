@@ -24,9 +24,9 @@ const IntroScreen = ({ onEnter }) => {
         }, 800);
     };
 
-    // Auto-dismiss after 1.5s
+    // Auto-dismiss after 10s
     useEffect(() => {
-        const timer = setTimeout(handleExit, 1500);
+        const timer = setTimeout(handleExit, 10000);
         return () => clearTimeout(timer);
     }, []);
 
