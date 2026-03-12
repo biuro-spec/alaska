@@ -134,7 +134,7 @@ export default function CookieConsent() {
                                         <span className="cookie-badge always-active">Zawsze aktywne</span>
                                     </div>
                                     <label className="cookie-switch disabled">
-                                        <input type="checkbox" checked={preferences.necessary} disabled />
+                                        <input type="checkbox" checked={preferences.necessary} disabled aria-label="Absolutnie niezbędne" />
                                         <span className="slider round"></span>
                                     </label>
                                 </div>
@@ -155,6 +155,7 @@ export default function CookieConsent() {
                                             type="checkbox"
                                             checked={preferences.functional}
                                             onChange={() => togglePreference('functional')}
+                                            aria-label="Funkcjonalne"
                                         />
                                         <span className="slider round"></span>
                                     </label>
@@ -176,6 +177,7 @@ export default function CookieConsent() {
                                             type="checkbox"
                                             checked={preferences.statistical}
                                             onChange={() => togglePreference('statistical')}
+                                            aria-label="Statystyka"
                                         />
                                         <span className="slider round"></span>
                                     </label>
@@ -197,6 +199,7 @@ export default function CookieConsent() {
                                             type="checkbox"
                                             checked={preferences.marketing}
                                             onChange={() => togglePreference('marketing')}
+                                            aria-label="Reklamy"
                                         />
                                         <span className="slider round"></span>
                                     </label>
