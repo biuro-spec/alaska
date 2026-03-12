@@ -58,7 +58,7 @@ const BlogArticle = memo(() => {
             "publisher": {
                 "@type": "Organization",
                 "name": "Alaska - Chłodnictwo i Klimatyzacja",
-                "logo": { "@type": "ImageObject", "url": "https://alaska-rp.pl/logo.png" }
+                "logo": { "@type": "ImageObject", "url": "https://alaska-rp.pl/logo.webp" }
             },
             "mainEntityOfPage": `https://alaska-rp.pl/blog/${article.slug}`
         });

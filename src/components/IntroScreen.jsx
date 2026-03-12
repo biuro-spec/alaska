@@ -70,7 +70,7 @@ const IntroScreen = ({ onEnter }) => {
 
             <div className="intro-content">
                 <div className="intro-logo-wrap">
-                    <img src="/logo.png" alt="Alaska Logo" className="intro-logo" />
+                    <img src="/logo.webp" alt="Alaska Logo" className="intro-logo" />
                 </div>
                 <div className="intro-text-group">
                     <h1 className="intro-name-flow">

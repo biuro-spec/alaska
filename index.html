@@ -27,6 +27,10 @@
   <meta property="twitter:description" content="Profesjonalny montaż i serwis klimatyzacji w Raciborzu.">
   <meta property="twitter:image" content="https://alaska-rp.pl/og-image.png">
 
+  <!-- DNS prefetch for external resources -->
+  <link rel="dns-prefetch" href="https://common.v-manager.pl">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
   <!-- Fonts (reduced weights, display=swap for fast FCP) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +40,7 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
   <!-- Preload critical hero image -->
-  <link rel="preload" as="image" type="image/webp" href="/hero-refrigeration.webp">
+  <link rel="preload" as="image" type="image/webp" href="/hero-refrigeration.webp" fetchpriority="high">
 
   <!-- Schema.org / LocalBusiness -->
   <script type="application/ld+json">

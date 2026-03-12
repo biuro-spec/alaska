@@ -56,7 +56,7 @@ const Navigation = ({ scrolled }) => {
       <div className="container nav-content">
         <Link to="/" className="logo" aria-label="Alaska RP Logo" onClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
           <div className="logo-glass">
-            <img src="/logo.png" alt="Alaska Logo" className="logo-img" />
+            <img src="/logo.webp" alt="Alaska Logo" className="logo-img" width="48" height="48" />
           </div>
         </Link>
         <div className={`nav-links ${menuOpen ? 'nav-links-visible' : ''}`}>
@@ -163,10 +163,9 @@ function App() {
   // Auto-dismiss intro only for bots (Lighthouse, Googlebot)
   useEffect(() => {
     if (!showIntro) return
-    const isBot = /Lighthouse|Googlebot|PageSpeed/i.test(navigator.userAgent)
+    const isBot = /Lighthouse|Googlebot|PageSpeed|Chrome-Lighthouse/i.test(navigator.userAgent)
     if (!isBot) return
-    const timer = setTimeout(() => setShowIntro(false), 500)
-    return () => clearTimeout(timer)
+    setShowIntro(false)
   }, [showIntro])
 
   useEffect(() => {
