@@ -16,12 +16,19 @@ const IntroScreen = ({ onEnter }) => {
     })));
 
     const handleExit = () => {
+        if (isClosing) return;
         setIsClosing(true);
         setTimeout(() => {
             setIsVisible(false);
             onEnter();
         }, 800);
     };
+
+    // Auto-dismiss after 2.5s so Lighthouse sees real content
+    useEffect(() => {
+        const timer = setTimeout(handleExit, 2500);
+        return () => clearTimeout(timer);
+    }, []);
 
     const splitText = (text, startDelay) => {
         return text.split('').map((char, index) => (
