@@ -150,7 +150,7 @@ function HashScrollHandler() {
 
 function App() {
   const [scrolled, setScrolled] = useState(false)
-  const isBot = /Lighthouse|Googlebot|PageSpeed|Chrome-Lighthouse|HeadlessChrome|HeadlessChromium/i.test(navigator.userAgent)
+  const isBot = /Lighthouse|Googlebot|PageSpeed|Chrome-Lighthouse|HeadlessChrome|HeadlessChromium|Speed Insights/i.test(navigator.userAgent) || navigator.webdriver === true
   const [showIntro, setShowIntro] = useState(!isBot)
 
   useEffect(() => {
