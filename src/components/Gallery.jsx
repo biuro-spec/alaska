@@ -42,7 +42,7 @@ const Gallery = memo(() => {
                             className={`gallery-item reveal reveal-delay-${(i % 3) + 1} ${isVisible ? 'reveal-visible' : ''}`}
                             onClick={() => setLightbox(i)}
                         >
-                            <img src={photo.thumb} alt={photo.alt} loading="lazy" />
+                            <img src={photo.thumb} alt={photo.alt} loading="lazy" decoding="async" width="300" height="300" />
                             <div className="gallery-overlay">
                                 <i className="fa-solid fa-magnifying-glass-plus"></i>
                             </div>

@@ -16,11 +16,19 @@ const Salon = memo(() => {
                 </div>
 
                 <div className={`salon-photo reveal reveal-delay-1 ${isVisible ? 'reveal-visible' : ''}`}>
-                    <img
-                        src="/images/salon-front.webp"
-                        alt="Salon Alaska Klimatyzacja - budynek przy ul. Bosackiej 52 w Raciborzu"
-                        loading="lazy"
-                    />
+                    <picture>
+                        <source
+                            media="(max-width: 768px)"
+                            srcSet="/images/salon-front-mobile.webp"
+                        />
+                        <img
+                            src="/images/salon-front.webp"
+                            alt="Salon Alaska Klimatyzacja - budynek przy ul. Bosackiej 52 w Raciborzu"
+                            loading="lazy"
+                            width="1828"
+                            height="749"
+                        />
+                    </picture>
                 </div>
 
                 <div className={`salon-light-grid reveal reveal-delay-2 ${isVisible ? 'reveal-visible' : ''}`}>

@@ -21,6 +21,9 @@ const About = memo(() => {
                         src="https://common.v-manager.pl/uploads/images/websites/16/2f4f0de9f631d9fa45e88009a233e8ea-822293001618228852.jpg"
                         alt="Zespół Alaska - profesjonalny montaż klimatyzacji"
                         loading="lazy"
+                        decoding="async"
+                        width="800"
+                        height="600"
                     />
                     <div className="about-hero-overlay">
                         <div className="about-hero-badge">

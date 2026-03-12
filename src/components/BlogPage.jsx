@@ -98,6 +98,10 @@ const BlogPage = memo(() => {
                                     src="/images/featured-ac.webp"
                                     alt="Nowoczesny klimatyzator"
                                     className="featured-ac-img"
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="400"
+                                    height="400"
                                 />
                             </div>
                         </div>
