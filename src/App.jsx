@@ -150,7 +150,8 @@ function HashScrollHandler() {
 
 function App() {
   const [scrolled, setScrolled] = useState(false)
-  const [showIntro, setShowIntro] = useState(true)
+  const isBot = /Lighthouse|Googlebot|PageSpeed|Chrome-Lighthouse/i.test(navigator.userAgent)
+  const [showIntro, setShowIntro] = useState(!isBot)
 
   useEffect(() => {
     if (showIntro) {
@@ -158,14 +159,6 @@ function App() {
     } else {
       document.body.style.overflow = ''
     }
-  }, [showIntro])
-
-  // Auto-dismiss intro only for bots (Lighthouse, Googlebot)
-  useEffect(() => {
-    if (!showIntro) return
-    const isBot = /Lighthouse|Googlebot|PageSpeed|Chrome-Lighthouse/i.test(navigator.userAgent)
-    if (!isBot) return
-    setShowIntro(false)
   }, [showIntro])
 
   useEffect(() => {
