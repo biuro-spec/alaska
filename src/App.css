@@ -86,10 +86,10 @@ p {
   font-family: var(--font-heading);
 }
 .btn-primary {
-  background: var(--primary);
+  background: #2563eb;
   color: #fff;
   border: none;
-  box-shadow: 0 4px 14px #3b82f64d;
+  box-shadow: 0 4px 14px #2563eb4d;
 }
 .btn-primary:hover {
   background: var(--secondary);
@@ -394,7 +394,7 @@ figcaption {
 .hero-btns .btn-primary {
   padding: 1rem 2.2rem;
   font-size: 1.05rem;
-  background: var(--primary);
+  background: #2563eb;
   border: 2px solid transparent;
   color: #fff;
   font-weight: 700;
@@ -463,11 +463,12 @@ figcaption {
   box-shadow: 0 12px 30px #3b82f626;
   background: #ffffffd9;
 }
-.stat-card h3 {
+.stat-card .stat-value {
   font-size: 3rem;
   margin-bottom: 0.5rem;
   color: var(--primary);
   font-family: var(--font-heading);
+  font-weight: 800;
 }
 .stat-card p {
   color: #475569;
@@ -2656,7 +2657,7 @@ figcaption {
 }
 
 .intro-hint-premium {
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.7);
     letter-spacing: 0.3em;
     font-family: 'Inter', sans-serif;
     text-transform: uppercase;

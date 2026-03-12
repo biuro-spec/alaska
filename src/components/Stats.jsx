@@ -18,7 +18,7 @@ const Stats = memo(() => {
                         key={i}
                         className={`stat-card glass reveal reveal-delay-${i + 1} ${isVisible ? 'reveal-visible' : ''}`}
                     >
-                        <h3>{s.value}</h3>
+                        <p className="stat-value">{s.value}</p>
                         <p>{s.label}</p>
                     </div>
                 ))}
