@@ -235,7 +235,7 @@
     background: transparent;
     border: none;
     font-size: 1.5rem;
-    color: #94a3b8;
+    color: #64748b;
     cursor: pointer;
     transition: color 0.2s;
     display: flex;
@@ -426,7 +426,7 @@ input:checked+.slider:before {
 }
 
 .cookie-links .separator {
-    color: #cbd5e1;
+    color: #94a3b8;
 }
 
 .cookie-modal-footer {

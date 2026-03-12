@@ -53,12 +53,13 @@ const Gallery = memo(() => {
 
             {lightbox !== null && (
                 <div className="lightbox" onClick={() => setLightbox(null)}>
-                    <button className="lightbox-close" onClick={() => setLightbox(null)}>
+                    <button className="lightbox-close" onClick={() => setLightbox(null)} aria-label="Zamknij galerię">
                         <i className="fa-solid fa-xmark"></i>
                     </button>
                     <button
                         className="lightbox-nav lightbox-prev"
                         onClick={(e) => { e.stopPropagation(); setLightbox((lightbox - 1 + PHOTOS.length) % PHOTOS.length); }}
+                        aria-label="Poprzednie zdjęcie"
                     >
                         <i className="fa-solid fa-chevron-left"></i>
                     </button>
@@ -70,6 +71,7 @@ const Gallery = memo(() => {
                     <button
                         className="lightbox-nav lightbox-next"
                         onClick={(e) => { e.stopPropagation(); setLightbox((lightbox + 1) % PHOTOS.length); }}
+                        aria-label="Następne zdjęcie"
                     >
                         <i className="fa-solid fa-chevron-right"></i>
                     </button>

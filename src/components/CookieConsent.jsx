@@ -113,7 +113,7 @@ export default function CookieConsent() {
                                 setShowBanner(true);
                             }
                             setShowModal(false);
-                        }}>
+                        }} aria-label="Zamknij">
                             <i className="fa-solid fa-xmark"></i>
                         </button>
                     </div>

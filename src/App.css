@@ -1180,7 +1180,7 @@ figcaption {
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: #64748b;
   margin-bottom: 1.5rem;
   text-shadow: none;
 }
@@ -1216,7 +1216,7 @@ figcaption {
 }
 .brand-strip-item span {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: #64748b;
   margin-top: 0.25rem;
 }
 .feature {
@@ -1444,7 +1444,7 @@ figcaption {
 }
 .input-group input::placeholder,
 .input-group textarea::placeholder {
-  color: #94a3b8;
+  color: #64748b;
 }
 .input-group input:focus,
 .input-group textarea:focus {
@@ -1472,7 +1472,7 @@ figcaption {
 }
 .char-counter {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: #64748b;
   text-align: right;
   margin-top: -0.25rem;
 }
