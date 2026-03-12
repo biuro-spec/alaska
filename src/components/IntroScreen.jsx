@@ -24,9 +24,9 @@ const IntroScreen = ({ onEnter }) => {
         }, 800);
     };
 
-    // Auto-dismiss after 2.5s so Lighthouse sees real content
+    // Auto-dismiss after 1.5s
     useEffect(() => {
-        const timer = setTimeout(handleExit, 2500);
+        const timer = setTimeout(handleExit, 1500);
         return () => clearTimeout(timer);
     }, []);
 
