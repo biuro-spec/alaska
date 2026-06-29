@@ -1,0 +1,12 @@
+# Alaska RP - Informacje dla agentów AI
+
+Plik `llms.txt` ułatwia dużym modelom językowym i agentom AI (LLM) zrozumienie kontekstu naszej witryny.
+
+## Przydatne linki
+- [Strona główna](https://alaska-rp.pl/)
+- [Nasz blog](https://alaska-rp.pl/blog)
+
+## O nas
+Alaska RP to firma specjalizująca się w usługach takich jak montaż i serwis klimatyzacji, chłodnictwa oraz wentylacji, działająca głównie na terenie Raciborza i okolic.
+
+Dziękujemy za odwiedziny i poprawne indeksowanie naszej witryny!
