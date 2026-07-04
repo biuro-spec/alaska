@@ -7,6 +7,10 @@ const sanitize = (str) => str.replace(/<[^>]*>/g, '').slice(0, 2000);
 
 const RATE_LIMIT_MS = 60 * 1000; // 60 sekund między wysyłkami
 
+// Endpoint Formspree — wklej tutaj ID formularza z panelu formspree.io
+// (np. 'xayzabcd' → 'https://formspree.io/f/xayzabcd')
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnjklkkn';
+
 const ContactForm = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -17,7 +21,7 @@ const ContactForm = () => {
         website: '',
     });
     const [errors, setErrors] = useState({});
-    const [status, setStatus] = useState('idle'); // idle | success | ratelimit
+    const [status, setStatus] = useState('idle'); // idle | sending | success | ratelimit | error
     const lastSubmitRef = useRef(0);
 
     const validate = () => {
@@ -42,7 +46,7 @@ const ContactForm = () => {
         if (errors[field]) setErrors((prev) => { const ne = { ...prev }; delete ne[field]; return ne; });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Honeypot — boty wypełnią ukryte pole "website"
@@ -72,15 +76,27 @@ const ContactForm = () => {
             email: sanitize(formData.email),
             phone: sanitize(formData.phone),
             message: sanitize(formData.message),
+            _subject: `Zapytanie ze strony Alaska od ${sanitize(formData.name)}`,
         };
 
-        // TODO: W przyszłości — wysyłka przez backend/API (np. EmailJS, Formspree)
-        console.info('Formularz gotowy do wysyłki:', safeData);
+        setStatus('sending');
+        try {
+            const res = await fetch(FORMSPREE_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify(safeData),
+            });
 
-        lastSubmitRef.current = now;
-        setStatus('success');
-        setFormData({ name: '', email: '', phone: '', message: '', website: '' });
-        setErrors({});
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+            lastSubmitRef.current = now;
+            setStatus('success');
+            setFormData({ name: '', email: '', phone: '', message: '', website: '' });
+            setErrors({});
+        } catch (err) {
+            console.error('Błąd wysyłki formularza:', err);
+            setStatus('error');
+        }
     };
 
     return (
@@ -96,6 +112,11 @@ const ContactForm = () => {
             {status === 'ratelimit' && (
                 <div className="form-error-banner" role="alert">
                     <i className="fa-solid fa-clock"></i> Możesz wysłać kolejną wiadomość za 60 sekund.
+                </div>
+            )}
+            {status === 'error' && (
+                <div className="form-error-banner" role="alert">
+                    <i className="fa-solid fa-triangle-exclamation"></i> Nie udało się wysłać wiadomości. Zadzwoń: 607 044 336 lub napisz na alaskarp@tlen.pl.
                 </div>
             )}
 
@@ -184,8 +205,10 @@ const ContactForm = () => {
                     {errors.message && <span id="message-error" className="field-error" role="alert">{errors.message}</span>}
                 </div>
 
-                <button type="submit" className="btn btn-primary btn-block">
-                    Wyślij wiadomość <i className="fa-solid fa-paper-plane"></i>
+                <button type="submit" className="btn btn-primary btn-block" disabled={status === 'sending'}>
+                    {status === 'sending'
+                        ? <>Wysyłanie… <i className="fa-solid fa-spinner fa-spin"></i></>
+                        : <>Wyślij wiadomość <i className="fa-solid fa-paper-plane"></i></>}
                 </button>
             </form>
         </div>

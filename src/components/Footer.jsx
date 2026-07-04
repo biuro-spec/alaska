@@ -88,7 +88,7 @@ const Footer = memo(() => (
                             <i className="fa-solid fa-location-dot"></i>
                             <div>
                                 <span className="footer-contact-label">Adres</span>
-                                <span>ul. Bosacka 52, Racibórz</span>
+                                <span>1 Maja 4 (przy SP Orlen), 47-400 Racibórz</span>
                             </div>
                         </div>
                     </div>

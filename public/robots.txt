@@ -1,4 +1,4 @@
-﻿User-agent: *
+User-agent: *
 Allow: /
 
-Sitemap: https://alaska-rp.pl/sitemap.xml
+Sitemap: https://alaskarp.pl/sitemap.xml

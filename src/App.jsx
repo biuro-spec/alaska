@@ -119,7 +119,7 @@ function HomePage() {
                 <div className="method-card">
                   <i className="fa-solid fa-location-dot"></i>
                   <h3>Adres biura</h3>
-                  <p>ul. Rudzka 53/18, Racibórz</p>
+                  <p>1 Maja 4 (przy SP Orlen), 47-400 Racibórz</p>
                 </div>
               </div>
             </div>

@@ -24,9 +24,9 @@ const IntroScreen = ({ onEnter }) => {
         }, 800);
     };
 
-    // Auto-dismiss after 10s
+    // Auto-dismiss after 4s
     useEffect(() => {
-        const timer = setTimeout(handleExit, 10000);
+        const timer = setTimeout(handleExit, 4000);
         return () => clearTimeout(timer);
     }, []);
 
@@ -80,7 +80,7 @@ const IntroScreen = ({ onEnter }) => {
                     <img src="/logo.webp" alt="Alaska Logo" className="intro-logo" />
                 </div>
                 <div className="intro-text-group">
-                    <h1 className="intro-name-flow">
+                    <div className="intro-name-flow" role="presentation" aria-hidden="true">
                         <div className="name-part firstName">
                             <span className="initial">{splitText('R', 0.5)}</span>
                             <span className="rest">{splitText('afał', 2.5)}</span>
@@ -89,7 +89,7 @@ const IntroScreen = ({ onEnter }) => {
                             <span className="initial">{splitText('P', 0.8)}</span>
                             <span className="rest">{splitText('aszczyński', 3.0)}</span>
                         </div>
-                    </h1>
+                    </div>
                     <div className="intro-divider-glow"></div>
                     <p className="intro-hint-premium">Kliknij, aby wejść w świat chłodu</p>
                 </div>

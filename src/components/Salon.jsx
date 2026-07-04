@@ -12,7 +12,7 @@ const Salon = memo(() => {
             <div className="container">
                 <div className={`section-header reveal ${isVisible ? 'reveal-visible' : ''}`}>
                     <h2 className="salon-light-heading">Salon klimatyzacji w Raciborzu</h2>
-                    <p className="salon-light-subheading">Odwiedź nas na ul. Bosackiej 52, porozmawiaj z ekspertami i zobacz urządzenia na żywo.</p>
+                    <p className="salon-light-subheading">Odwiedź nas na ul. 1 Maja 4 (przy SP Orlen), porozmawiaj z ekspertami i zobacz urządzenia na żywo.</p>
                 </div>
 
                 <div className={`salon-photo reveal reveal-delay-1 ${isVisible ? 'reveal-visible' : ''}`}>
@@ -23,7 +23,7 @@ const Salon = memo(() => {
                         />
                         <img
                             src="/images/salon-front.webp"
-                            alt="Salon Alaska Klimatyzacja - budynek przy ul. Bosackiej 52 w Raciborzu"
+                            alt="Salon Alaska Klimatyzacja - budynek przy ul. 1 Maja 4 w Raciborzu"
                             loading="lazy"
                             width="1828"
                             height="749"
@@ -38,7 +38,7 @@ const Salon = memo(() => {
                                 <div className="salon-detail-icon"><i className="fa-solid fa-map-location-dot"></i></div>
                                 <div>
                                     <strong>Adres salonu</strong>
-                                    <span>ul. Bosacka 52, 47-400 Racibórz</span>
+                                    <span>1 Maja 4 (przy SP Orlen), 47-400 Racibórz</span>
                                 </div>
                             </div>
                             <div className="salon-detail-item">
@@ -69,7 +69,7 @@ const Salon = memo(() => {
 
                     <div className="salon-light-map">
                         <iframe
-                            src="https://maps.google.com/maps?q=Bosacka+52,+47-400+Racib%C3%B3rz&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            src="https://maps.google.com/maps?q=1+Maja+4,+47-400+Racib%C3%B3rz&t=&z=15&ie=UTF8&iwloc=&output=embed"
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}

@@ -6,7 +6,7 @@ const Stats = memo(() => {
 
     const statsData = [
         { value: "28+", label: "Lat doświadczenia" },
-        { value: "Salon", label: "ul. Bosacka 52, Racibórz" },
+        { value: "Siedziba", label: "1 Maja 4 (przy SP Orlen)" },
         { value: "24h", label: "Wsparcie serwisowe" }
     ];
 

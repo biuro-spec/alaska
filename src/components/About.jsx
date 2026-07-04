@@ -49,7 +49,7 @@ const About = memo(() => {
                                 Przez ponad <strong>28 lat</strong> staliśmy się zaufanym partnerem dla tysięcy mieszkańców Śląska oraz setek firm z branży spożywczej i handlowej. Specjalizujemy się w <strong>serwisie chłodniczym</strong> oraz zaawansowanych instalacjach klimatyzacyjnych, które zapewniają komfort nawet w największe upały.
                             </p>
                             <p>
-                                Posiadamy salon wystawowy przy <strong>ul. Bosackiej 52</strong> w Raciborzu, gdzie możesz na żywo zobaczyć najnowsze modele klimatyzatorów LG czy Rotenso. Nasze wieloletnie doświadczenie to Twoja gwarancja, że instalacja zostanie wykonana zgodnie ze sztuką i przepisami F-gazowymi.
+                                Posiadamy salon wystawowy przy <strong>ul. 1 Maja 4</strong> w Raciborzu, gdzie możesz na żywo zobaczyć najnowsze modele klimatyzatorów LG czy Rotenso. Nasze wieloletnie doświadczenie to Twoja gwarancja, że instalacja zostanie wykonana zgodnie ze sztuką i przepisami F-gazowymi.
                             </p>
                         </div>
 

@@ -176,7 +176,7 @@ const blogArticles = [
             },
             {
                 "type": "paragraph",
-                "value": "Nie ma jednej najlepszej marki — dobór zależy od budżetu, oczekiwań i warunków montażu. Dla klientów szukających najlepszej ceny polecamy Rotenso, dla optymalnego balansu — LG, a dla maksymalnej trwałości — Mitsubishi. Zapraszamy do naszego salonu przy ul. Bosackiej 52 w Raciborzu, gdzie można zobaczyć urządzenia na żywo."
+                "value": "Nie ma jednej najlepszej marki — dobór zależy od budżetu, oczekiwań i warunków montażu. Dla klientów szukających najlepszej ceny polecamy Rotenso, dla optymalnego balansu — LG, a dla maksymalnej trwałości — Mitsubishi. Zapraszamy do naszego salonu przy ul. 1 Maja 4 w Raciborzu, gdzie można zobaczyć urządzenia na żywo."
             }
         ],
         "keywords": [
@@ -489,7 +489,7 @@ const blogArticles = [
         "readTime": 2
     },
     {
-        "slug": "klimatyzacja-a-zdrowie-alergeny-czystość-powietrza",
+        "slug": "klimatyzacja-a-zdrowie-alergeny-czystosc-powietrza",
         "title": "Klimatyzacja a zdrowie — alergeny, bakterie i jakość powietrza",
         "category": "Porady",
         "excerpt": "Czy klimatyzacja jest zdrowa? Jakie zagrożenia niesie brudna klimatyzacja? Dowiedz się, jak zadbać o czyste powietrze w domu z klimatyzacją.",
