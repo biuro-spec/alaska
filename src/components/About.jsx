@@ -18,12 +18,12 @@ const About = memo(() => {
                 {/* Panoramic photo banner */}
                 <div className={`about-hero-photo reveal ${isVisible ? 'reveal-visible' : ''}`}>
                     <img
-                        src="https://common.v-manager.pl/uploads/images/websites/16/2f4f0de9f631d9fa45e88009a233e8ea-822293001618228852.jpg"
-                        alt="Zespół Alaska - profesjonalny montaż klimatyzacji"
+                        src="/images/about-hero.webp"
+                        alt="Siedziba i flota Alaska - klimatyzacja i chłodnictwo w Raciborzu"
                         loading="lazy"
                         decoding="async"
-                        width="800"
-                        height="600"
+                        width="1280"
+                        height="720"
                     />
                     <div className="about-hero-overlay">
                         <div className="about-hero-badge">

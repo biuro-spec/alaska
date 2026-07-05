@@ -2,26 +2,12 @@ import { memo, useState } from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const PHOTOS = [
-    {
-        src: 'https://common.v-manager.pl/uploads/images/websites/16/2f4f0de9f631d9fa45e88009a233e8ea-822293001618228852.jpg',
-        thumb: 'https://common.v-manager.pl/uploads/images/websites/16/frame/300x300/2f4f0de9f631d9fa45e88009a233e8ea-822293001618228852.jpg',
-        alt: 'Realizacja Alaska - klimatyzacja'
-    },
-    {
-        src: 'https://common.v-manager.pl/uploads/images/websites/16/39176d42eaadc7cda564b790d551137a-173501001618228902.jpg',
-        thumb: 'https://common.v-manager.pl/uploads/images/websites/16/frame/300x300/39176d42eaadc7cda564b790d551137a-173501001618228902.jpg',
-        alt: 'Realizacja Alaska - montaż'
-    },
-    {
-        src: 'https://common.v-manager.pl/uploads/images/websites/16/eb00d2473a86753432c49bf5ef48f3f0-338029001618228902.jpg',
-        thumb: 'https://common.v-manager.pl/uploads/images/websites/16/frame/300x300/eb00d2473a86753432c49bf5ef48f3f0-338029001618228902.jpg',
-        alt: 'Realizacja Alaska - serwis'
-    },
-    {
-        src: 'https://common.v-manager.pl/uploads/images/websites/16/16fa40ad3c25ccc520e3345417504d78-118093001618228853.jpg',
-        thumb: 'https://common.v-manager.pl/uploads/images/websites/16/frame/300x300/16fa40ad3c25ccc520e3345417504d78-118093001618228853.jpg',
-        alt: 'Realizacja Alaska - urządzenia'
-    }
+    { src: '/images/gal-1.webp', thumb: '/images/gal-1-thumb.webp', alt: 'Van Alaska Klimatyzacja - flota serwisowa w Raciborzu' },
+    { src: '/images/gal-2.webp', thumb: '/images/gal-2-thumb.webp', alt: 'Oznakowany pojazd Alaska przy siedzibie firmy' },
+    { src: '/images/gal-3.webp', thumb: '/images/gal-3-thumb.webp', alt: 'Flota Alaska - klimatyzacja i chłodnictwo' },
+    { src: '/images/gal-4.webp', thumb: '/images/gal-4-thumb.webp', alt: 'Van serwisowy Alaska Chłodnictwo' },
+    { src: '/images/gal-5.webp', thumb: '/images/gal-5-thumb.webp', alt: 'Siedziba Alaska w Raciborzu - hale serwisowe' },
+    { src: '/images/gal-6.webp', thumb: '/images/gal-6-thumb.webp', alt: 'Baza serwisowa Alaska - hale i pojazdy' },
 ];
 
 const Gallery = memo(() => {
