@@ -43,6 +43,9 @@
   .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted);width:auto;padding:8px 16px}
   .btn-ghost:hover{border-color:var(--primary);color:var(--text)}
   .btn-danger{background:var(--danger);color:#fff;width:auto;padding:8px 14px;font-size:.85rem}
+  .btn-ai{background:transparent;border:1px solid var(--primary);color:var(--primary);margin-top:8px;font-size:.9rem}
+  .btn-ai:hover{background:var(--primary);color:#fff}
+  .btn-ai:disabled{opacity:.5;cursor:not-allowed}
   /* Dropzone */
   .drop{border:2px dashed var(--border);border-radius:12px;padding:26px;text-align:center;color:var(--muted);cursor:pointer;transition:.2s}
   .drop:hover,.drop.over{border-color:var(--primary);color:var(--text)}
@@ -106,7 +109,8 @@
         </div>
         <div class="field">
           <label>Opis</label>
-          <textarea id="opis" placeholder="Krótki opis realizacji (opcjonalnie)"></textarea>
+          <textarea id="opis" placeholder="Wpisz kilka słów (np. montaż LG, dom, Racibórz) i kliknij „Generuj opis AI" — albo napisz własny."></textarea>
+          <button class="btn btn-ai" id="aiBtn" onclick="generujOpis()" type="button">✨ Generuj opis AI</button>
         </div>
         <button class="btn btn-primary" id="submitBtn" onclick="submitRealizacja()" disabled>Opublikuj</button>
         <p class="hint">Zdjęcie zostanie zmniejszone i wysłane do galerii na stronie. Pojawi się od razu w zakładce „Realizacje".</p>
@@ -196,6 +200,23 @@ async function api(payload){
     body:JSON.stringify({...payload,key:KEY})
   });
   return res.json();
+}
+
+// ---------- AI: generuj opis ----------
+async function generujOpis(){
+  const tytul = document.getElementById('tytul').value.trim();
+  const notatki = document.getElementById('opis').value.trim();
+  if(!tytul && !notatki){ toast('Wpisz tytuł lub kilka słów w opisie',true); return; }
+  const btn = document.getElementById('aiBtn');
+  btn.disabled = true; btn.textContent = '✨ Generuję…';
+  try{
+    const r = await api({ action:'generateOpis', tytul, notatki });
+    if(r.ok && r.data && r.data.opis){
+      document.getElementById('opis').value = r.data.opis;
+      toast('Opis wygenerowany ✓ — możesz go poprawić');
+    } else { toast(r.error || 'Błąd generowania', true); }
+  }catch(e){ toast('Błąd połączenia z AI', true); }
+  btn.disabled = false; btn.textContent = '✨ Generuj opis AI';
 }
 
 // ---------- Dodaj ----------

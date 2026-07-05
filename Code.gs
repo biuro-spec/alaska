@@ -83,6 +83,13 @@ function ustawKlucz() {
   return 'Hasło ustawione. Wpisz to samo hasło logując się do panelu.';
 }
 
+// ⬇️ USTAW KLUCZ GEMINI (AI): wklej klucz z aistudio.google.com i uruchom raz.
+function ustawGeminiKey() {
+  const GEMINI_KEY = 'WKLEJ-TUTAJ-KLUCZ-GEMINI';
+  PropertiesService.getScriptProperties().setProperty('GEMINI_API_KEY', GEMINI_KEY);
+  return 'Klucz Gemini ustawiony.';
+}
+
 function checkAuth(action, key) {
   if (PUBLIC_ACTIONS.indexOf(action) > -1) return true;
   const secret = getSecret();
@@ -114,6 +121,7 @@ function doPost(e) {
       case 'uploadRealizacja': return uploadRealizacja(data);
       case 'updateRealizacja': return updateRealizacja(data);
       case 'deleteRealizacja': return deleteRealizacja(data);
+      case 'generateOpis':     return generateOpis(data);
       default:                 return jsonErr('Nieznana akcja: ' + data.action);
     }
   } catch(err) { return jsonErr(err.toString()); }
@@ -191,4 +199,44 @@ function deleteRealizacja(data) {
     }
   }
   return jsonErr('Nie znaleziono: ' + data.id);
+}
+
+// =====================================================
+// AI — generowanie opisu SEO (Google Gemini)
+// =====================================================
+function generateOpis(data) {
+  const key = PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY');
+  if (!key) return jsonErr('Brak klucza Gemini — uruchom ustawGeminiKey');
+
+  const tytul = (data.tytul || '').toString().slice(0, 300);
+  const notatki = (data.notatki || '').toString().slice(0, 800);
+
+  const prompt =
+    'Jesteś copywriterem SEO firmy ALASKA — klimatyzacja, chłodnictwo i pompy ciepła w Raciborzu (woj. śląskie), działającej od 1997 roku. '
+    + 'Na podstawie poniższych notatek napisz JEDEN opis realizacji na stronę internetową w galerii "Realizacje". '
+    + 'Wymagania: język polski, 2-4 zdania, ton profesjonalny i konkretny, naturalnie wpleć frazy lokalne (Racibórz, Śląsk) oraz branżowe (montaż klimatyzacji, serwis, marka urządzenia jeśli podano). '
+    + 'Bez zmyślania szczegółów, bez emotikonów, bez formatowania markdown, bez nagłówków — sam tekst opisu.\n\n'
+    + 'Tytuł realizacji: ' + (tytul || '(brak)') + '\n'
+    + 'Notatki operatora: ' + (notatki || '(brak)');
+
+  const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + encodeURIComponent(key);
+  const payload = { contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.7, maxOutputTokens: 400 } };
+
+  try {
+    const res = UrlFetchApp.fetch(url, {
+      method: 'post',
+      contentType: 'application/json',
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true
+    });
+    const code = res.getResponseCode();
+    const body = JSON.parse(res.getContentText());
+    if (code !== 200) return jsonErr('Gemini błąd ' + code + ': ' + (body.error && body.error.message || ''));
+    const text = body.candidates && body.candidates[0] && body.candidates[0].content
+      && body.candidates[0].content.parts && body.candidates[0].content.parts[0].text;
+    if (!text) return jsonErr('Gemini nie zwrócił tekstu');
+    return jsonOK({ opis: text.trim() });
+  } catch(err) {
+    return jsonErr('Gemini wyjątek: ' + err.toString());
+  }
 }
