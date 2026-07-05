@@ -219,8 +219,11 @@ function generateOpis(data) {
     + 'Tytuł realizacji: ' + (tytul || '(brak)') + '\n'
     + 'Notatki operatora: ' + (notatki || '(brak)');
 
-  const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + encodeURIComponent(key);
-  const payload = { contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.7, maxOutputTokens: 400 } };
+  const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(key);
+  const payload = {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: { temperature: 0.7, maxOutputTokens: 600, thinkingConfig: { thinkingBudget: 0 } }
+  };
 
   try {
     const res = UrlFetchApp.fetch(url, {
@@ -235,7 +238,13 @@ function generateOpis(data) {
     const text = body.candidates && body.candidates[0] && body.candidates[0].content
       && body.candidates[0].content.parts && body.candidates[0].content.parts[0].text;
     if (!text) return jsonErr('Gemini nie zwrócił tekstu');
-    return jsonOK({ opis: text.trim() });
+    // Usuń ewentualnie doklejony na górze tytuł (model czasem powtarza go jako nagłówek)
+    let out = text.trim();
+    const t = (tytul || '').trim();
+    if (t && out.toLowerCase().indexOf(t.toLowerCase()) === 0) {
+      out = out.slice(t.length).replace(/^[\s:–—-]+/, '').trim();
+    }
+    return jsonOK({ opis: out });
   } catch(err) {
     return jsonErr('Gemini wyjątek: ' + err.toString());
   }
