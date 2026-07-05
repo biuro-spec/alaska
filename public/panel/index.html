@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel Realizacji — Alaska</title>
+<style>
+  :root{
+    --bg:#030712; --card:#0f172a; --border:rgba(255,255,255,.1);
+    --primary:#3b82f6; --primary-dark:#2563eb; --text:#f9fafb; --muted:#94a3b8;
+    --danger:#ef4444; --ok:#22c55e; --radius:14px;
+    --font:'Inter',system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--font);background:radial-gradient(circle at top right,#1e293b,#030712);color:var(--text);min-height:100vh}
+  .hidden{display:none!important}
+  input,textarea,button{font-family:inherit;font-size:1rem}
+  /* Login */
+  #login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+  .login-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:44px 36px;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+  .login-logo{font-size:1.8rem;font-weight:800;letter-spacing:1px;margin-bottom:4px}
+  .login-logo span{color:var(--primary)}
+  .login-sub{color:var(--muted);font-size:.78rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:32px}
+  /* Layout */
+  .wrap{max-width:1100px;margin:0 auto;padding:24px 20px 80px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:12px}
+  .topbar h1{font-size:1.5rem}
+  .topbar h1 span{color:var(--primary)}
+  .grid{display:grid;grid-template-columns:360px 1fr;gap:28px;align-items:start}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px}
+  .panel h2{font-size:1.1rem;margin-bottom:20px}
+  .field{margin-bottom:16px;text-align:left}
+  .field label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:6px}
+  .field input,.field textarea{width:100%;background:#020617;border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text)}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--primary)}
+  .field textarea{resize:vertical;min-height:80px}
+  .btn{border:none;border-radius:10px;padding:13px 20px;font-weight:600;cursor:pointer;transition:.2s;width:100%}
+  .btn-primary{background:var(--primary);color:#fff}
+  .btn-primary:hover{background:var(--primary-dark)}
+  .btn-primary:disabled{opacity:.5;cursor:not-allowed}
+  .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted);width:auto;padding:8px 16px}
+  .btn-ghost:hover{border-color:var(--primary);color:var(--text)}
+  .btn-danger{background:var(--danger);color:#fff;width:auto;padding:8px 14px;font-size:.85rem}
+  /* Dropzone */
+  .drop{border:2px dashed var(--border);border-radius:12px;padding:26px;text-align:center;color:var(--muted);cursor:pointer;transition:.2s}
+  .drop:hover,.drop.over{border-color:var(--primary);color:var(--text)}
+  .preview{max-width:100%;border-radius:10px;margin-top:12px;max-height:220px;object-fit:cover}
+  /* Lista */
+  .items{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:560px){.items{grid-template-columns:1fr}}
+  .item{background:#020617;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .item img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#0f172a}
+  .item-body{padding:12px 14px}
+  .item-body strong{display:block;font-size:.95rem;margin-bottom:3px}
+  .item-body p{color:var(--muted);font-size:.82rem;line-height:1.4;margin-bottom:10px}
+  .item-actions{display:flex;gap:8px}
+  .empty{color:var(--muted);text-align:center;padding:40px;font-style:italic}
+  /* Toast */
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-left:4px solid var(--ok);padding:14px 22px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;transition:.3s;pointer-events:none;z-index:999}
+  #toast.show{opacity:1}
+  #toast.err{border-left-color:var(--danger)}
+  .hint{color:var(--muted);font-size:.8rem;margin-top:8px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<!-- ====== LOGOWANIE ====== -->
+<div id="login">
+  <div class="login-card">
+    <div class="login-logo">ALA<span>SKA</span></div>
+    <div class="login-sub">Panel realizacji</div>
+    <div class="field">
+      <label>Hasło dostępu</label>
+      <input type="password" id="pass" placeholder="Wpisz hasło" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">Zaloguj</button>
+    <p class="hint" id="loginHint"></p>
+  </div>
+</div>
+
+<!-- ====== PANEL ====== -->
+<div id="app" class="hidden">
+  <div class="wrap">
+    <div class="topbar">
+      <h1>Panel <span>Realizacji</span></h1>
+      <button class="btn btn-ghost" onclick="logout()">Wyloguj</button>
+    </div>
+
+    <div class="grid">
+      <!-- Dodawanie -->
+      <div class="panel">
+        <h2>Dodaj realizację</h2>
+        <div class="field">
+          <label>Zdjęcie</label>
+          <div class="drop" id="drop" onclick="document.getElementById('file').click()">
+            <span id="dropText">Kliknij lub przeciągnij zdjęcie tutaj</span>
+            <img id="preview" class="preview hidden" alt="podgląd">
+          </div>
+          <input type="file" id="file" accept="image/*" class="hidden" onchange="onFile(this.files[0])">
+        </div>
+        <div class="field">
+          <label>Tytuł</label>
+          <input type="text" id="tytul" placeholder="np. Montaż klimatyzacji LG — dom jednorodzinny">
+        </div>
+        <div class="field">
+          <label>Opis</label>
+          <textarea id="opis" placeholder="Krótki opis realizacji (opcjonalnie)"></textarea>
+        </div>
+        <button class="btn btn-primary" id="submitBtn" onclick="submitRealizacja()" disabled>Opublikuj</button>
+        <p class="hint">Zdjęcie zostanie zmniejszone i wysłane do galerii na stronie. Pojawi się od razu w zakładce „Realizacje".</p>
+      </div>
+
+      <!-- Lista -->
+      <div class="panel">
+        <h2>Opublikowane realizacje (<span id="count">0</span>)</h2>
+        <div id="list"><p class="empty">Wczytuję…</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ⬇️ WKLEJ URL wdrożenia Apps Script (kończy się na /exec)
+const API_URL = 'WKLEJ_TUTAJ_URL_APPS_SCRIPT';
+
+let KEY = '';
+let imageData = null;      // base64
+let imageType = 'image/jpeg';
+
+// ---------- Login ----------
+function doLogin(){
+  const p = document.getElementById('pass').value.trim();
+  if(!p){ document.getElementById('loginHint').textContent='Wpisz hasło.'; return; }
+  KEY = p;
+  localStorage.setItem('alaska_panel_key', p);
+  showApp();
+}
+function logout(){ localStorage.removeItem('alaska_panel_key'); location.reload(); }
+function showApp(){
+  document.getElementById('login').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  loadList();
+}
+// auto-login
+(function(){
+  const saved = localStorage.getItem('alaska_panel_key');
+  if(saved){ KEY = saved; showApp(); }
+})();
+
+// ---------- Toast ----------
+function toast(msg, err){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='show'+(err?' err':'');
+  setTimeout(()=>t.className='',3000);
+}
+
+// ---------- Wybór/kompresja zdjęcia ----------
+function onFile(file){
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      // zmniejsz do max 1600px szerokości, konwertuj do JPEG
+      const max=1600;
+      let w=img.width,h=img.height;
+      if(w>max){ h=Math.round(h*max/w); w=max; }
+      const c=document.createElement('canvas'); c.width=w; c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      imageData=c.toDataURL('image/jpeg',0.82);
+      imageType='image/jpeg';
+      const pv=document.getElementById('preview');
+      pv.src=imageData; pv.classList.remove('hidden');
+      document.getElementById('dropText').classList.add('hidden');
+      document.getElementById('submitBtn').disabled=false;
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+// drag & drop
+const drop=document.getElementById('drop');
+['dragover','dragenter'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over');}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over');}));
+drop.addEventListener('drop',e=>{ if(e.dataTransfer.files[0]) onFile(e.dataTransfer.files[0]); });
+
+// ---------- API ----------
+async function api(payload){
+  const res=await fetch(API_URL,{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'}, // unikamy preflight CORS
+    body:JSON.stringify({...payload,key:KEY})
+  });
+  return res.json();
+}
+
+// ---------- Dodaj ----------
+async function submitRealizacja(){
+  if(!imageData){ toast('Wybierz zdjęcie',true); return; }
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true; btn.textContent='Wysyłanie…';
+  try{
+    const r=await api({
+      action:'uploadRealizacja',
+      imageBase64:imageData,
+      contentType:imageType,
+      tytul:document.getElementById('tytul').value.trim(),
+      opis:document.getElementById('opis').value.trim()
+    });
+    if(r.ok){
+      toast('Dodano realizację ✓');
+      // reset
+      imageData=null;
+      document.getElementById('tytul').value='';
+      document.getElementById('opis').value='';
+      document.getElementById('preview').classList.add('hidden');
+      document.getElementById('dropText').classList.remove('hidden');
+      document.getElementById('file').value='';
+      loadList();
+    } else { toast(r.error||'Błąd',true); }
+  }catch(e){ toast('Błąd połączenia',true); }
+  btn.textContent='Opublikuj'; btn.disabled=false;
+}
+
+// ---------- Lista ----------
+async function loadList(){
+  const box=document.getElementById('list');
+  box.innerHTML='<p class="empty">Wczytuję…</p>';
+  try{
+    const r=await fetch(API_URL+'?action=getRealizacje');
+    const res=await r.json();
+    const items=(res.ok&&Array.isArray(res.data))?res.data:[];
+    document.getElementById('count').textContent=items.length;
+    if(!items.length){ box.innerHTML='<p class="empty">Brak realizacji. Dodaj pierwszą po lewej.</p>'; return; }
+    box.innerHTML='<div class="items">'+items.map(it=>{
+      const src=it.FileId?`https://drive.google.com/thumbnail?id=${it.FileId}&sz=w600`:it.Url;
+      return `<div class="item">
+        <img src="${src}" referrerpolicy="no-referrer" alt="">
+        <div class="item-body">
+          <strong>${esc(it.Tytul)||'(bez tytułu)'}</strong>
+          <p>${esc(it.Opis)||''}</p>
+          <div class="item-actions">
+            <button class="btn btn-danger" onclick="del('${it.ID}')">Usuń</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('')+'</div>';
+  }catch(e){ box.innerHTML='<p class="empty">Błąd wczytywania.</p>'; }
+}
+function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+async function del(id){
+  if(!confirm('Usunąć tę realizację? Tej operacji nie można cofnąć.')) return;
+  const r=await api({action:'deleteRealizacja',id});
+  if(r.ok){ toast('Usunięto'); loadList(); }
+  else toast(r.error||'Błąd',true);
+}
+</script>
+</body>
+</html>

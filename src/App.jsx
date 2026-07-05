@@ -16,6 +16,7 @@ const FAQ = lazy(() => import('./components/FAQ'))
 const ContactForm = lazy(() => import('./components/ContactForm'))
 const BlogPage = lazy(() => import('./components/BlogPage'))
 const BlogArticle = lazy(() => import('./components/BlogArticle'))
+const Realizacje = lazy(() => import('./pages/Realizacje'))
 const IntroScreen = lazy(() => import('./components/IntroScreen'))
 const CookieConsent = lazy(() => import('./components/CookieConsent'))
 
@@ -63,6 +64,7 @@ const Navigation = ({ scrolled }) => {
           <NavLink hash="#o-firmie" onClick={closeMenu}>O firmie</NavLink>
           <NavLink hash="#oferta" onClick={closeMenu}>Oferta</NavLink>
           <NavLink hash="#salon" onClick={closeMenu}>Salon</NavLink>
+          <Link to="/realizacje" onClick={closeMenu}>Realizacje</Link>
           <Link to="/blog" onClick={closeMenu}>Blog</Link>
           <NavLink hash="#kontakt" onClick={closeMenu}>Kontakt</NavLink>
           <a href="tel:607044336" className="mobile-phone-link" onClick={closeMenu}>
@@ -182,6 +184,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />
+          <Route path="/realizacje" element={<Realizacje />} />
         </Routes>
       </Suspense>
 
