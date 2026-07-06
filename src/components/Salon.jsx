@@ -19,10 +19,10 @@ const Salon = memo(() => {
                     <picture>
                         <source
                             media="(max-width: 768px)"
-                            srcSet="/images/salon-front-mobile.webp"
+                            srcSet="/images/salon-front-2-mobile.webp"
                         />
                         <img
-                            src="/images/salon-front.webp"
+                            src="/images/salon-front-2.webp"
                             alt="Salon Alaska Klimatyzacja - budynek przy ul. 1 Maja 4 w Raciborzu"
                             loading="lazy"
                             width="1828"
