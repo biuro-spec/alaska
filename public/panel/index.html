@@ -50,16 +50,25 @@
   .drop{border:2px dashed var(--border);border-radius:12px;padding:26px;text-align:center;color:var(--muted);cursor:pointer;transition:.2s}
   .drop:hover,.drop.over{border-color:var(--primary);color:var(--text)}
   .preview{max-width:100%;border-radius:10px;margin-top:12px;max-height:220px;object-fit:cover}
-  /* Lista */
-  .items{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-  @media(max-width:560px){.items{grid-template-columns:1fr}}
-  .item{background:#020617;border:1px solid var(--border);border-radius:12px;overflow:hidden}
-  .item img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#0f172a}
-  .item-body{padding:12px 14px}
-  .item-body strong{display:block;font-size:.95rem;margin-bottom:3px}
-  .item-body p{color:var(--muted);font-size:.82rem;line-height:1.4;margin-bottom:10px}
-  .item-actions{display:flex;gap:8px}
+  /* Lista — układ poziomy */
+  .items{display:flex;flex-direction:column;gap:14px}
+  .item{display:flex;gap:16px;background:#020617;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .item img{width:200px;flex-shrink:0;aspect-ratio:4/3;object-fit:cover;display:block;background:#0f172a}
+  .item-body{padding:14px 16px 14px 0;flex:1;min-width:0;display:flex;flex-direction:column}
+  .item-body strong{display:block;font-size:1rem;margin-bottom:5px}
+  .item-body p{color:var(--muted);font-size:.85rem;line-height:1.5;margin-bottom:12px;flex:1}
+  .item-actions{display:flex;gap:8px;margin-top:auto}
+  .btn-edit{background:transparent;border:1px solid var(--border);color:var(--text);width:auto;padding:8px 16px;font-size:.85rem}
+  .btn-edit:hover{border-color:var(--primary);color:var(--primary)}
+  @media(max-width:560px){.item{flex-direction:column}.item img{width:100%}.item-body{padding:0 14px 14px}}
   .empty{color:var(--muted);text-align:center;padding:40px;font-style:italic}
+  /* Modal edycji */
+  #editModal{position:fixed;inset:0;background:rgba(3,7,18,.85);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+  #editModal.show{display:flex}
+  .modal-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:520px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .modal-card h2{font-size:1.15rem;margin-bottom:18px}
+  .modal-actions{display:flex;gap:10px;margin-top:8px}
+  .modal-actions .btn{flex:1}
   /* Toast */
   #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-left:4px solid var(--ok);padding:14px 22px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;transition:.3s;pointer-events:none;z-index:999}
   #toast.show{opacity:1}
@@ -121,6 +130,26 @@
         <h2>Opublikowane realizacje (<span id="count">0</span>)</h2>
         <div id="list"><p class="empty">Wczytuję…</p></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== MODAL EDYCJI ====== -->
+<div id="editModal">
+  <div class="modal-card">
+    <h2>Edytuj realizację</h2>
+    <div class="field">
+      <label>Tytuł</label>
+      <input type="text" id="editTytul" placeholder="Tytuł realizacji">
+    </div>
+    <div class="field">
+      <label>Opis</label>
+      <textarea id="editOpis" placeholder="Opis realizacji"></textarea>
+      <button class="btn btn-ai" id="editAiBtn" onclick="generujOpisEdit()" type="button">✨ Generuj opis AI</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeEdit()">Anuluj</button>
+      <button class="btn btn-primary" id="editSaveBtn" onclick="saveEdit()">Zapisz zmiany</button>
     </div>
   </div>
 </div>
@@ -248,16 +277,17 @@ async function submitRealizacja(){
 }
 
 // ---------- Lista ----------
+let ITEMS=[];
 async function loadList(){
   const box=document.getElementById('list');
   box.innerHTML='<p class="empty">Wczytuję…</p>';
   try{
     const r=await fetch(API_URL+'?action=getRealizacje');
     const res=await r.json();
-    const items=(res.ok&&Array.isArray(res.data))?res.data:[];
-    document.getElementById('count').textContent=items.length;
-    if(!items.length){ box.innerHTML='<p class="empty">Brak realizacji. Dodaj pierwszą po lewej.</p>'; return; }
-    box.innerHTML='<div class="items">'+items.map(it=>{
+    ITEMS=(res.ok&&Array.isArray(res.data))?res.data:[];
+    document.getElementById('count').textContent=ITEMS.length;
+    if(!ITEMS.length){ box.innerHTML='<p class="empty">Brak realizacji. Dodaj pierwszą po lewej.</p>'; return; }
+    box.innerHTML='<div class="items">'+ITEMS.map(it=>{
       const src=it.FileId?`https://drive.google.com/thumbnail?id=${it.FileId}&sz=w600`:it.Url;
       return `<div class="item">
         <img src="${src}" referrerpolicy="no-referrer" alt="">
@@ -265,6 +295,7 @@ async function loadList(){
           <strong>${esc(it.Tytul)||'(bez tytułu)'}</strong>
           <p>${esc(it.Opis)||''}</p>
           <div class="item-actions">
+            <button class="btn btn-edit" onclick="openEdit('${it.ID}')">Edytuj</button>
             <button class="btn btn-danger" onclick="del('${it.ID}')">Usuń</button>
           </div>
         </div>
@@ -273,6 +304,43 @@ async function loadList(){
   }catch(e){ box.innerHTML='<p class="empty">Błąd wczytywania.</p>'; }
 }
 function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+// ---------- Edycja ----------
+let EDIT_ID=null;
+function openEdit(id){
+  const it=ITEMS.find(x=>x.ID===id); if(!it) return;
+  EDIT_ID=id;
+  document.getElementById('editTytul').value=it.Tytul||'';
+  document.getElementById('editOpis').value=it.Opis||'';
+  document.getElementById('editModal').classList.add('show');
+}
+function closeEdit(){ document.getElementById('editModal').classList.remove('show'); EDIT_ID=null; }
+async function generujOpisEdit(){
+  const tytul=document.getElementById('editTytul').value.trim();
+  const notatki=document.getElementById('editOpis').value.trim();
+  if(!tytul&&!notatki){ toast('Wpisz tytuł lub kilka słów',true); return; }
+  const btn=document.getElementById('editAiBtn');
+  btn.disabled=true; btn.textContent='✨ Generuję…';
+  try{
+    const r=await api({action:'generateOpis',tytul,notatki});
+    if(r.ok&&r.data&&r.data.opis){ document.getElementById('editOpis').value=r.data.opis; toast('Opis wygenerowany ✓'); }
+    else toast(r.error||'Błąd',true);
+  }catch(e){ toast('Błąd AI',true); }
+  btn.disabled=false; btn.textContent='✨ Generuj opis AI';
+}
+async function saveEdit(){
+  if(!EDIT_ID) return;
+  const btn=document.getElementById('editSaveBtn');
+  btn.disabled=true; btn.textContent='Zapisywanie…';
+  try{
+    const r=await api({action:'updateRealizacja',id:EDIT_ID,
+      tytul:document.getElementById('editTytul').value.trim(),
+      opis:document.getElementById('editOpis').value.trim()});
+    if(r.ok){ toast('Zapisano ✓'); closeEdit(); loadList(); }
+    else toast(r.error||'Błąd',true);
+  }catch(e){ toast('Błąd połączenia',true); }
+  btn.disabled=false; btn.textContent='Zapisz zmiany';
+}
 
 async function del(id){
   if(!confirm('Usunąć tę realizację? Tej operacji nie można cofnąć.')) return;
