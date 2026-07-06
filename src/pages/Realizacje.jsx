@@ -49,16 +49,19 @@ export default function Realizacje() {
                             onClick={() => setLightbox(i)}
                             aria-label={`Powiększ: ${item.Tytul || 'realizacja'}`}
                         >
-                            <img
-                                src={imgUrl(item, 600)}
-                                alt={item.Tytul || 'Realizacja Alaska - klimatyzacja Racibórz'}
-                                loading="lazy"
-                                referrerPolicy="no-referrer"
-                            />
+                            <div className="realizacja-thumb">
+                                <img
+                                    src={imgUrl(item, 600)}
+                                    alt={item.Tytul || 'Realizacja Alaska - klimatyzacja Racibórz'}
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer"
+                                />
+                                <span className="realizacja-zoom"><i className="fa-solid fa-magnifying-glass-plus"></i></span>
+                            </div>
                             {(item.Tytul || item.Opis) && (
-                                <div className="realizacja-overlay">
-                                    {item.Tytul && <span className="realizacja-title">{item.Tytul}</span>}
-                                    {item.Opis && <span className="realizacja-desc">{item.Opis}</span>}
+                                <div className="realizacja-info">
+                                    {item.Tytul && <h2>{item.Tytul}</h2>}
+                                    {item.Opis && <p>{item.Opis}</p>}
                                 </div>
                             )}
                         </button>
@@ -71,13 +74,15 @@ export default function Realizacje() {
                     <button className="rl-close" onClick={() => setLightbox(null)} aria-label="Zamknij">
                         <i className="fa-solid fa-xmark"></i>
                     </button>
-                    <button
-                        className="rl-nav rl-prev"
-                        onClick={(e) => { e.stopPropagation(); setLightbox((lightbox - 1 + items.length) % items.length); }}
-                        aria-label="Poprzednie"
-                    ><i className="fa-solid fa-chevron-left"></i></button>
+                    {items.length > 1 && (
+                        <button
+                            className="rl-nav rl-prev"
+                            onClick={(e) => { e.stopPropagation(); setLightbox((lightbox - 1 + items.length) % items.length); }}
+                            aria-label="Poprzednie"
+                        ><i className="fa-solid fa-chevron-left"></i></button>
+                    )}
                     <div className="rl-content" onClick={(e) => e.stopPropagation()}>
-                        <img src={imgUrl(items[lightbox], 1400)} alt={items[lightbox].Tytul || 'Realizacja Alaska'} referrerPolicy="no-referrer" />
+                        <img src={imgUrl(items[lightbox], 1200)} alt={items[lightbox].Tytul || 'Realizacja Alaska'} referrerPolicy="no-referrer" />
                         {(items[lightbox].Tytul || items[lightbox].Opis) && (
                             <div className="rl-caption">
                                 {items[lightbox].Tytul && <h3>{items[lightbox].Tytul}</h3>}
@@ -85,11 +90,13 @@ export default function Realizacje() {
                             </div>
                         )}
                     </div>
-                    <button
-                        className="rl-nav rl-next"
-                        onClick={(e) => { e.stopPropagation(); setLightbox((lightbox + 1) % items.length); }}
-                        aria-label="Następne"
-                    ><i className="fa-solid fa-chevron-right"></i></button>
+                    {items.length > 1 && (
+                        <button
+                            className="rl-nav rl-next"
+                            onClick={(e) => { e.stopPropagation(); setLightbox((lightbox + 1) % items.length); }}
+                            aria-label="Następne"
+                        ><i className="fa-solid fa-chevron-right"></i></button>
+                    )}
                 </div>
             )}
         </main>
