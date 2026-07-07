@@ -82,7 +82,9 @@ export default function Realizacje() {
                         ><i className="fa-solid fa-chevron-left"></i></button>
                     )}
                     <div className="rl-content" onClick={(e) => e.stopPropagation()}>
-                        <img src={imgUrl(items[lightbox], 1200)} alt={items[lightbox].Tytul || 'Realizacja Alaska'} referrerPolicy="no-referrer" />
+                        <div className="rl-image">
+                            <img src={imgUrl(items[lightbox], 1200)} alt={items[lightbox].Tytul || 'Realizacja Alaska'} referrerPolicy="no-referrer" />
+                        </div>
                         {(items[lightbox].Tytul || items[lightbox].Opis) && (
                             <div className="rl-caption">
                                 {items[lightbox].Tytul && <h3>{items[lightbox].Tytul}</h3>}
