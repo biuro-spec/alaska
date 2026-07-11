@@ -7,19 +7,19 @@ import { API_URL } from '../config';
 const SEED = [
     {
         ID: 'seed-1',
-        Url: '/realizacje/seed-1.webp',
+        Url: '/foto-realizacje/seed-1.webp',
         Tytul: 'Montaż klimatyzacji Rotenso — dom jednorodzinny',
         Opis: 'Montaż klimatyzacji ściennej Rotenso na elewacji domu jednorodzinnego w Raciborzu. Zadbaliśmy o estetyczne poprowadzenie instalacji i cichą pracę jednostki zewnętrznej — komfortowe chłodzenie latem i dogrzewanie w chłodniejsze dni.',
     },
     {
         ID: 'seed-2',
-        Url: '/realizacje/seed-2.webp',
+        Url: '/foto-realizacje/seed-2.webp',
         Tytul: 'Chłodnictwo sklepowe — regały i komory chłodnicze',
         Opis: 'Instalacja przeszklonych regałów chłodniczych dla obiektu handlowego na Śląsku. Kompleksowe chłodnictwo sklepowe: dobór urządzeń, montaż i uruchomienie — pewne przechowywanie produktów w wymaganej temperaturze.',
     },
     {
         ID: 'seed-3',
-        Url: '/realizacje/seed-3.webp',
+        Url: '/foto-realizacje/seed-3.webp',
         Tytul: 'Klimatyzacja kasetonowa LG — montaż wewnętrzny',
         Opis: 'Montaż klimatyzacji kasetonowej (sufitowej) LG we wnętrzu w Raciborzu. Dyskretna jednostka wpuszczona w sufit równomiernie rozprowadza powietrze, nie zajmując miejsca na ścianach — idealne rozwiązanie do mieszkań i biur.',
     },
