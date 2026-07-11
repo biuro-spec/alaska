@@ -74,7 +74,9 @@ function initSheet() {
 // =====================================================
 const PUBLIC_ACTIONS = ['test','getRealizacje','generateOpis'];
 
-function getSecret() { return PropertiesService.getScriptProperties().getProperty('PANEL_SECRET') || ''; }
+// Hasło panelu — na stałe w kodzie (nie gubi się przy ponownych wdrożeniach).
+// Aby zmienić hasło: podmień wartość poniżej i wdróż nową wersję.
+function getSecret() { return 'Alaska2026!'; }
 
 // ⬇️ USTAW HASŁO PANELU: wpisz je poniżej i uruchom ustawKlucz() raz.
 function ustawKlucz() {
