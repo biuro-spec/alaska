@@ -200,21 +200,44 @@ function toast(msg, err){
   setTimeout(()=>t.className='',3000);
 }
 
-// ---------- Wybór/kompresja zdjęcia ----------
+// ---------- Logo (znak wodny) ----------
+const LOGO=new Image();
+LOGO.src='/logo.png';
+
+// ---------- Wybór/kompresja zdjęcia (webp + logo w rogu) ----------
 function onFile(file){
   if(!file) return;
   const reader=new FileReader();
   reader.onload=e=>{
     const img=new Image();
     img.onload=()=>{
-      // zmniejsz do max 1600px szerokości, konwertuj do JPEG
+      // zmniejsz do max 1600px szerokości
       const max=1600;
       let w=img.width,h=img.height;
       if(w>max){ h=Math.round(h*max/w); w=max; }
       const c=document.createElement('canvas'); c.width=w; c.height=h;
-      c.getContext('2d').drawImage(img,0,0,w,h);
-      imageData=c.toDataURL('image/jpeg',0.82);
-      imageType='image/jpeg';
+      const ctx=c.getContext('2d');
+      ctx.drawImage(img,0,0,w,h);
+
+      // znak wodny — logo Alaski w prawym dolnym rogu
+      if(LOGO.complete && LOGO.naturalWidth){
+        const lw=Math.round(w*0.16);
+        const lh=Math.round(lw*LOGO.naturalHeight/LOGO.naturalWidth);
+        const pad=Math.round(w*0.025);
+        ctx.save();
+        ctx.shadowColor='rgba(0,0,0,0.45)';
+        ctx.shadowBlur=Math.round(w*0.012);
+        ctx.globalAlpha=0.92;
+        ctx.drawImage(LOGO, w-lw-pad, h-lh-pad, lw, lh);
+        ctx.restore();
+      }
+
+      // eksport do webp (lżejsze) z fallbackiem do jpeg
+      let data=c.toDataURL('image/webp',0.85);
+      if(data.indexOf('image/webp')>-1){ imageType='image/webp'; }
+      else { data=c.toDataURL('image/jpeg',0.85); imageType='image/jpeg'; }
+      imageData=data;
+
       const pv=document.getElementById('preview');
       pv.src=imageData; pv.classList.remove('hidden');
       document.getElementById('dropText').classList.add('hidden');
