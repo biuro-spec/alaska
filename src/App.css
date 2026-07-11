@@ -2909,9 +2909,11 @@ figcaption {
 /* Siatka kart — responsywna, wyśrodkowana (ładnie wygląda też przy 1 karcie) */
 .realizacje-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 380px));
+    grid-template-columns: repeat(3, 1fr);
     gap: 28px;
-    justify-content: center;
+}
+@media (max-width: 900px) {
+    .realizacje-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }
 }
 .realizacja-card {
     display: flex;
