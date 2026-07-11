@@ -98,7 +98,10 @@ const Footer = memo(() => (
             {/* Bottom bar */}
             
             <div className="footer-bottom">
-                <p>&copy; {new Date().getFullYear()} Alaska Rafał Paszczyński. Wszystkie prawa zastrzeżone.</p>
+                <p>
+                    <a href="/panel/" className="footer-panel-link" aria-label="Panel logowania" title="Panel">&copy; {new Date().getFullYear()}</a>
+                    {' '}Alaska Rafał Paszczyński. Wszystkie prawa zastrzeżone.
+                </p>
                 <div className="footer-attribution">
                     <span>Stworzone z pasją dla Alaska-RP przez </span>
                     <a href="https://webstudio47.pl" target="_blank" rel="noopener noreferrer" className="webstudio-link">

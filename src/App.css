@@ -3081,3 +3081,11 @@ figcaption {
     .rl-prev { left: 12px; }
     .rl-next { right: 12px; }
 }
+
+/* Ukryty link do panelu w stopce (© rok) */
+.footer-panel-link {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+.footer-panel-link:hover { color: var(--primary); }

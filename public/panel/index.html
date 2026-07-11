@@ -5,8 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>Panel Realizacji — Alaska</title>
+<!-- PWA — instalacja jako aplikacja na telefon -->
+<link rel="manifest" href="/panel/manifest.webmanifest">
+<meta name="theme-color" content="#0a1628">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Alaska Panel">
+<link rel="apple-touch-icon" href="/panel/icon-192.png">
 <style>
   :root{
     --bg:#030712; --card:#0f172a; --border:rgba(255,255,255,.1);
@@ -349,6 +356,11 @@ async function del(id){
   const r=await api({action:'deleteRealizacja',id});
   if(r.ok){ toast('Usunięto'); loadList(); }
   else toast(r.error||'Błąd',true);
+}
+
+// PWA — rejestracja service workera (instalacja jako aplikacja)
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{ navigator.serviceWorker.register('/panel/sw.js').catch(()=>{}); });
 }
 </script>
 </body>
