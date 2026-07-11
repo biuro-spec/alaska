@@ -72,7 +72,7 @@ function initSheet() {
 // =====================================================
 // BEZPIECZEŃSTWO — hasło do panelu
 // =====================================================
-const PUBLIC_ACTIONS = ['test','getRealizacje'];
+const PUBLIC_ACTIONS = ['test','getRealizacje','generateOpis'];
 
 function getSecret() { return PropertiesService.getScriptProperties().getProperty('PANEL_SECRET') || ''; }
 
