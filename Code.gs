@@ -184,6 +184,19 @@ function updateRealizacja(data) {
     if (rows[i][0] === data.id) {
       if (data.tytul !== undefined) sheet.getRange(i+1, 4).setValue(data.tytul);
       if (data.opis  !== undefined) sheet.getRange(i+1, 5).setValue(data.opis);
+      // Podmiana zdjęcia (opcjonalna)
+      if (data.imageBase64) {
+        try { DriveApp.getFileById(rows[i][1]).setTrashed(true); } catch(e) {}
+        const base64 = data.imageBase64.replace(/^data:image\/\w+;base64,/, '');
+        const ct = data.contentType || 'image/jpeg';
+        const ext = ct.indexOf('png') > -1 ? 'png' : (ct.indexOf('webp') > -1 ? 'webp' : 'jpg');
+        const blob = Utilities.newBlob(Utilities.base64Decode(base64), ct, 'realizacja-' + Date.now() + '.' + ext);
+        const file = getFolder().createFile(blob);
+        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+        const fileId = file.getId();
+        sheet.getRange(i+1, 2).setValue(fileId);
+        sheet.getRange(i+1, 3).setValue('https://drive.google.com/thumbnail?id=' + fileId + '&sz=w1200');
+      }
       return jsonOK('Zaktualizowano');
     }
   }

@@ -148,6 +148,14 @@
   <div class="modal-card">
     <h2>Edytuj realizację</h2>
     <div class="field">
+      <label>Zdjęcie (kliknij, aby zmienić — zostaw, aby nie ruszać)</label>
+      <div class="drop" id="editDrop" onclick="document.getElementById('editFile').click()">
+        <span id="editDropText">Kliknij, aby wybrać nowe zdjęcie</span>
+        <img id="editPreview" class="preview hidden" alt="podgląd">
+      </div>
+      <input type="file" id="editFile" accept="image/*" class="hidden" onchange="onEditFile(this.files[0])">
+    </div>
+    <div class="field">
       <label>Tytuł</label>
       <input type="text" id="editTytul" placeholder="Tytuł realizacji">
     </div>
@@ -204,21 +212,19 @@ function toast(msg, err){
 const LOGO=new Image();
 LOGO.src='/logo.png';
 
-// ---------- Wybór/kompresja zdjęcia (webp + logo w rogu) ----------
-function onFile(file){
+// ---------- Wspólne przetwarzanie zdjęcia (webp + logo w rogu) ----------
+function processImage(file, cb){
   if(!file) return;
   const reader=new FileReader();
   reader.onload=e=>{
     const img=new Image();
     img.onload=()=>{
-      // zmniejsz do max 1600px szerokości
       const max=1600;
       let w=img.width,h=img.height;
       if(w>max){ h=Math.round(h*max/w); w=max; }
       const c=document.createElement('canvas'); c.width=w; c.height=h;
       const ctx=c.getContext('2d');
       ctx.drawImage(img,0,0,w,h);
-
       // znak wodny — logo Alaski w prawym dolnym rogu
       if(LOGO.complete && LOGO.naturalWidth){
         const lw=Math.round(w*0.16);
@@ -231,21 +237,24 @@ function onFile(file){
         ctx.drawImage(LOGO, w-lw-pad, h-lh-pad, lw, lh);
         ctx.restore();
       }
-
-      // eksport do webp (lżejsze) z fallbackiem do jpeg
-      let data=c.toDataURL('image/webp',0.85);
-      if(data.indexOf('image/webp')>-1){ imageType='image/webp'; }
-      else { data=c.toDataURL('image/jpeg',0.85); imageType='image/jpeg'; }
-      imageData=data;
-
-      const pv=document.getElementById('preview');
-      pv.src=imageData; pv.classList.remove('hidden');
-      document.getElementById('dropText').classList.add('hidden');
-      document.getElementById('submitBtn').disabled=false;
+      let data=c.toDataURL('image/webp',0.85), type='image/webp';
+      if(data.indexOf('image/webp')<0){ data=c.toDataURL('image/jpeg',0.85); type='image/jpeg'; }
+      cb(data,type);
     };
     img.src=e.target.result;
   };
   reader.readAsDataURL(file);
+}
+
+// Dodawanie
+function onFile(file){
+  processImage(file,(data,type)=>{
+    imageData=data; imageType=type;
+    const pv=document.getElementById('preview');
+    pv.src=imageData; pv.classList.remove('hidden');
+    document.getElementById('dropText').classList.add('hidden');
+    document.getElementById('submitBtn').disabled=false;
+  });
 }
 // drag & drop
 const drop=document.getElementById('drop');
@@ -338,15 +347,36 @@ async function loadList(){
 function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 // ---------- Edycja ----------
-let EDIT_ID=null;
+let EDIT_ID=null, editImageData=null, editImageType='image/webp';
 function openEdit(id){
   const it=ITEMS.find(x=>x.ID===id); if(!it) return;
-  EDIT_ID=id;
+  EDIT_ID=id; editImageData=null;
   document.getElementById('editTytul').value=it.Tytul||'';
   document.getElementById('editOpis').value=it.Opis||'';
+  // pokaż obecne zdjęcie
+  const cur=it.FileId?`https://drive.google.com/thumbnail?id=${it.FileId}&sz=w600`:it.Url;
+  const pv=document.getElementById('editPreview');
+  pv.src=cur; pv.setAttribute('referrerpolicy','no-referrer'); pv.classList.remove('hidden');
+  document.getElementById('editDropText').classList.add('hidden');
+  document.getElementById('editFile').value='';
   document.getElementById('editModal').classList.add('show');
 }
-function closeEdit(){ document.getElementById('editModal').classList.remove('show'); EDIT_ID=null; }
+function onEditFile(file){
+  processImage(file,(data,type)=>{
+    editImageData=data; editImageType=type;
+    const pv=document.getElementById('editPreview');
+    pv.removeAttribute('referrerpolicy'); pv.src=data; pv.classList.remove('hidden');
+    document.getElementById('editDropText').classList.add('hidden');
+  });
+}
+// drag & drop w edycji
+const editDrop=document.getElementById('editDrop');
+if(editDrop){
+  ['dragover','dragenter'].forEach(ev=>editDrop.addEventListener(ev,e=>{e.preventDefault();editDrop.classList.add('over');}));
+  ['dragleave','drop'].forEach(ev=>editDrop.addEventListener(ev,e=>{e.preventDefault();editDrop.classList.remove('over');}));
+  editDrop.addEventListener('drop',e=>{ if(e.dataTransfer.files[0]) onEditFile(e.dataTransfer.files[0]); });
+}
+function closeEdit(){ document.getElementById('editModal').classList.remove('show'); EDIT_ID=null; editImageData=null; }
 async function generujOpisEdit(){
   const tytul=document.getElementById('editTytul').value.trim();
   const notatki=document.getElementById('editOpis').value.trim();
@@ -365,9 +395,11 @@ async function saveEdit(){
   const btn=document.getElementById('editSaveBtn');
   btn.disabled=true; btn.textContent='Zapisywanie…';
   try{
-    const r=await api({action:'updateRealizacja',id:EDIT_ID,
+    const payload={action:'updateRealizacja',id:EDIT_ID,
       tytul:document.getElementById('editTytul').value.trim(),
-      opis:document.getElementById('editOpis').value.trim()});
+      opis:document.getElementById('editOpis').value.trim()};
+    if(editImageData){ payload.imageBase64=editImageData; payload.contentType=editImageType; }
+    const r=await api(payload);
     if(r.ok){ toast('Zapisano ✓'); closeEdit(); loadList(); }
     else toast(r.error||'Błąd',true);
   }catch(e){ toast('Błąd połączenia',true); }
