@@ -2,8 +2,31 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../config';
 
+// Stałe realizacje (lokalne, ładują się natychmiast) — pokazane pierwsze,
+// reszta z panelu (Google Dysk) doładowuje się w tle.
+const SEED = [
+    {
+        ID: 'seed-1',
+        Url: '/realizacje/seed-1.webp',
+        Tytul: 'Montaż klimatyzacji Rotenso — dom jednorodzinny',
+        Opis: 'Montaż klimatyzacji ściennej Rotenso na elewacji domu jednorodzinnego w Raciborzu. Zadbaliśmy o estetyczne poprowadzenie instalacji i cichą pracę jednostki zewnętrznej — komfortowe chłodzenie latem i dogrzewanie w chłodniejsze dni.',
+    },
+    {
+        ID: 'seed-2',
+        Url: '/realizacje/seed-2.webp',
+        Tytul: 'Chłodnictwo sklepowe — regały i komory chłodnicze',
+        Opis: 'Instalacja przeszklonych regałów chłodniczych dla obiektu handlowego na Śląsku. Kompleksowe chłodnictwo sklepowe: dobór urządzeń, montaż i uruchomienie — pewne przechowywanie produktów w wymaganej temperaturze.',
+    },
+    {
+        ID: 'seed-3',
+        Url: '/realizacje/seed-3.webp',
+        Tytul: 'Klimatyzacja kasetonowa LG — montaż wewnętrzny',
+        Opis: 'Montaż klimatyzacji kasetonowej (sufitowej) LG we wnętrzu w Raciborzu. Dyskretna jednostka wpuszczona w sufit równomiernie rozprowadza powietrze, nie zajmując miejsca na ścianach — idealne rozwiązanie do mieszkań i biur.',
+    },
+];
+
 export default function Realizacje() {
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState(SEED);
     const [loading, setLoading] = useState(true);
     const [lightbox, setLightbox] = useState(null);
 
@@ -12,7 +35,11 @@ export default function Realizacje() {
         document.title = 'Realizacje - montaż klimatyzacji i chłodnictwa | Alaska Racibórz';
         fetch(API_URL + '?action=getRealizacje')
             .then(r => r.json())
-            .then(res => { if (res.ok && Array.isArray(res.data)) setItems(res.data); })
+            .then(res => {
+                if (res.ok && Array.isArray(res.data) && res.data.length) {
+                    setItems([...SEED, ...res.data]);
+                }
+            })
             .catch(() => {})
             .finally(() => setLoading(false));
     }, []);
@@ -34,12 +61,6 @@ export default function Realizacje() {
                     <p>Zobacz przykłady naszych montaży i instalacji. Każda realizacja to gwarancja jakości i wieloletniego doświadczenia od 1997&nbsp;roku.</p>
                     <Link to="/" className="realizacje-back">← Powrót na stronę główną</Link>
                 </div>
-
-                {loading && <p className="realizacje-loading">Wczytuję realizacje…</p>}
-
-                {!loading && items.length === 0 && (
-                    <p className="realizacje-loading">Wkrótce pojawią się tutaj nasze realizacje. Zapraszamy ponownie!</p>
-                )}
 
                 <div className="realizacje-grid">
                     {items.map((item, i) => (
@@ -67,6 +88,8 @@ export default function Realizacje() {
                         </button>
                     ))}
                 </div>
+
+                {loading && <p className="realizacje-loading">Wczytuję kolejne realizacje…</p>}
             </div>
 
             {lightbox !== null && items[lightbox] && (
