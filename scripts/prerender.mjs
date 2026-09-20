@@ -244,6 +244,29 @@ for (const trasa of trasy()) {
 await przegladarka.zamknij();
 serwer.close();
 
+// vite-plugin-compression2 pakuje pliki PRZED prerenderem, więc dist/index.html.gz
+// i .br zawierają jeszcze pustą powłokę `<div id="root"></div>`. Dziś .htaccess
+// ich nie serwuje (kompresuje w locie mod_deflate), ale wystarczy, że ktoś kiedyś
+// włączy negocjację treści, i bot dostanie pusty dokument. Kasujemy je.
+let usuniete = 0;
+const posprzataj = (katalog) => {
+  for (const wpis of fs.readdirSync(katalog, { withFileTypes: true })) {
+    const pelna = path.join(katalog, wpis.name);
+    if (wpis.isDirectory()) posprzataj(pelna);
+    else if (/\.html\.(gz|br)$/.test(wpis.name)) {
+      fs.unlinkSync(pelna);
+      usuniete += 1;
+    }
+  }
+};
+posprzataj(DIST);
+if (usuniete) {
+  // Przymiotnik odmienia się razem z rzeczownikiem: 1 nieaktualny pakiet,
+  // 4 nieaktualne pakiety, 5 nieaktualnych pakietów.
+  const rzecz = odmiana(usuniete, 'nieaktualny pakiet', 'nieaktualne pakiety', 'nieaktualnych pakietów');
+  console.log(`[prerender] Usunięto ${usuniete} ${rzecz} .html.gz/.br sprzed prerenderu`);
+}
+
 const srednia = zapisane ? Math.round(znakiRazem / zapisane) : 0;
 console.log(
   `[prerender] Zapisano ${zapisane} ${odmiana(zapisane, 'trasę', 'trasy', 'tras')}, ` +
