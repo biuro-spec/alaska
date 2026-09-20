@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
+import uslugi from '../data/uslugi';
 
 const MAPS_LINK = 'https://www.google.com/maps/place//data=!4m2!3m1!1s0x471169338e7a89a9:0xeb85eba41038e5aa';
 const FB_LINK = 'https://www.facebook.com/alaska.raciborz.3';
@@ -52,10 +53,9 @@ const Footer = memo(() => (
                 <div className="footer-col">
                     <h4 className="footer-heading">Usługi</h4>
                     <nav className="footer-nav">
-                        <a href="/#oferta-klimatyzacja">Klimatyzacja</a>
-                        <a href="/#oferta-chlodnictwo">Chłodnictwo</a>
-                        <a href="/#oferta-pompy">Pompy ciepła</a>
-                        <a href="/#oferta-serwis">Serwis i montaż</a>
+                        {uslugi.map((u) => (
+                            <Link key={u.slug} to={`/${u.slug}`}>{u.h1}</Link>
+                        ))}
                     </nav>
                 </div>
 

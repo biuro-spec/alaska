@@ -1,6 +1,7 @@
 import { memo, useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import blogArticles, { BLOG_CATEGORIES } from '../data/blogArticles';
+import Seo from './Seo';
 
 const BlogPage = memo(() => {
     const [activeCategory, setActiveCategory] = useState('all');
@@ -15,17 +16,6 @@ const BlogPage = memo(() => {
         }
         window.scrollTo(0, 0);
 
-        document.title = 'Blog - Klimatyzacja, Chłodnictwo, Pompy Ciepła | Alaska Racibórz';
-        const descMeta = document.querySelector('meta[name="description"]');
-        if (descMeta) descMeta.content = 'Baza wiedzy Alaska Racibórz — porady, poradniki i aktualności z branży klimatyzacji, chłodnictwa i pomp ciepła.';
-        const canonical = document.querySelector('link[rel="canonical"]');
-        if (canonical) canonical.href = 'https://alaskarp.pl/blog';
-
-        return () => {
-            document.title = 'Alaska - Klimatyzacja i Chłodnictwo | Racibórz, Śląsk';
-            if (descMeta) descMeta.content = 'Alaska Racibórz — profesjonalna klimatyzacja i chłodnictwo przemysłowe. Montaż, serwis i wypożyczalnia od 1997 roku. Autoryzowany partner LG, Rotenso, Mitsubishi.';
-            if (canonical) canonical.href = 'https://alaskarp.pl/';
-        };
     }, [location]);
 
     const featuredArticle = activeCategory === 'all' ? blogArticles[0] : null;
@@ -49,6 +39,11 @@ const BlogPage = memo(() => {
 
     return (
         <div className="blog-page">
+            <Seo
+                title="Blog o klimatyzacji i chłodnictwie | Alaska Racibórz"
+                description="Baza wiedzy Alaska Racibórz — poradniki o klimatyzacji, chłodnictwie i pompach ciepła. Dobór, montaż, serwis i koszty."
+                path="/blog"
+            />
             <section className="blog-hero blog-article-hero" style={heroStyle}>
                 <div className="container">
                     <div className="hero-glass-card blog-hero-glass">

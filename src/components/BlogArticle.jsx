@@ -1,6 +1,7 @@
-import { memo, useState, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import blogArticles, { BLOG_CATEGORIES } from '../data/blogArticles';
+import Seo from './Seo';
 
 const BlogArticle = memo(() => {
     const { slug } = useParams();
@@ -21,57 +22,6 @@ const BlogArticle = memo(() => {
         window.scrollTo(0, 0);
     }, [slug]);
 
-    // Dynamic SEO meta tags
-    useEffect(() => {
-        if (!article) return;
-        const originalTitle = document.title;
-        const originalDesc = document.querySelector('meta[name="description"]')?.content;
-        const originalCanonical = document.querySelector('link[rel="canonical"]')?.href;
-
-        document.title = `${article.title} | Alaska Klimatyzacja Racibórz`;
-
-        const descMeta = document.querySelector('meta[name="description"]');
-        if (descMeta) descMeta.content = article.excerpt;
-
-        const canonical = document.querySelector('link[rel="canonical"]');
-        if (canonical) canonical.href = `https://alaskarp.pl/blog/${article.slug}`;
-
-        // OG tags
-        const ogTitle = document.querySelector('meta[property="og:title"]');
-        if (ogTitle) ogTitle.content = article.title;
-        const ogDesc = document.querySelector('meta[property="og:description"]');
-        if (ogDesc) ogDesc.content = article.excerpt;
-        const ogUrl = document.querySelector('meta[property="og:url"]');
-        if (ogUrl) ogUrl.content = `https://alaskarp.pl/blog/${article.slug}`;
-
-        // Schema.org Article
-        const schema = document.createElement('script');
-        schema.type = 'application/ld+json';
-        schema.id = 'article-schema';
-        schema.textContent = JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": article.title,
-            "description": article.excerpt,
-            "url": `https://alaskarp.pl/blog/${article.slug}`,
-            "author": { "@type": "Organization", "name": "Alaska - Chłodnictwo i Klimatyzacja" },
-            "publisher": {
-                "@type": "Organization",
-                "name": "Alaska - Chłodnictwo i Klimatyzacja",
-                "logo": { "@type": "ImageObject", "url": "https://alaskarp.pl/logo.webp" }
-            },
-            "mainEntityOfPage": `https://alaskarp.pl/blog/${article.slug}`
-        });
-        document.head.appendChild(schema);
-
-        return () => {
-            document.title = originalTitle;
-            if (descMeta && originalDesc) descMeta.content = originalDesc;
-            if (canonical && originalCanonical) canonical.href = originalCanonical;
-            const oldSchema = document.getElementById('article-schema');
-            if (oldSchema) oldSchema.remove();
-        };
-    }, [article]);
 
     if (!article) {
         return (
@@ -112,8 +62,62 @@ const BlogArticle = memo(() => {
         backgroundImage: `url(${getHeroImage(article.category)})`
     };
 
+    // Artykuly sa pisane w formie pytanie-odpowiedz, wiec naglowki zakonczone znakiem
+    // zapytania razem z nastepujacym po nich akapitem daja gotowy schemat FAQPage.
+    // W Search Console raport "Wyglad w wyszukiwarce" byl pusty — serwis nie mial
+    // ani jednego wyniku rozszerzonego, mimo ze material lezal gotowy.
+    const pytania = article.content.reduce((acc, blok, i) => {
+        if (blok.type !== 'heading' || !blok.value.trim().endsWith('?')) return acc;
+        const odpowiedz = article.content[i + 1];
+        if (odpowiedz?.type === 'paragraph') acc.push({ q: blok.value, a: odpowiedz.value });
+        return acc;
+    }, []);
+
+    const urlArtykulu = `https://alaskarp.pl/blog/${article.slug}`;
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'Article',
+                headline: article.title,
+                description: article.excerpt,
+                url: urlArtykulu,
+                mainEntityOfPage: urlArtykulu,
+                inLanguage: 'pl-PL',
+                articleSection: article.category,
+                author: { '@type': 'Organization', name: 'Alaska — Chłodnictwo i Klimatyzacja' },
+                publisher: { '@id': 'https://alaskarp.pl/#firma' },
+            },
+            {
+                '@type': 'BreadcrumbList',
+                itemListElement: [
+                    { '@type': 'ListItem', position: 1, name: 'Strona główna', item: 'https://alaskarp.pl' },
+                    { '@type': 'ListItem', position: 2, name: 'Baza wiedzy', item: 'https://alaskarp.pl/blog' },
+                    { '@type': 'ListItem', position: 3, name: article.title, item: urlArtykulu },
+                ],
+            },
+            ...(pytania.length
+                ? [{
+                    '@type': 'FAQPage',
+                    mainEntity: pytania.map((p) => ({
+                        '@type': 'Question',
+                        name: p.q,
+                        acceptedAnswer: { '@type': 'Answer', text: p.a },
+                    })),
+                }]
+                : []),
+        ],
+    };
+
     return (
         <div className="blog-page">
+            <Seo
+                title={`${article.title} | Alaska Racibórz`}
+                description={article.excerpt}
+                path={`/blog/${article.slug}`}
+                image={getHeroImage(article.category)}
+                jsonLd={jsonLd}
+            />
             <section className="blog-hero blog-article-hero" style={heroStyle}>
                 <div className="container">
                     <div className="hero-glass-card blog-hero-glass">

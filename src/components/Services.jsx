@@ -1,10 +1,12 @@
 import { memo, useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const services = [
     {
         icon: "fa-wind",
         title: "Klimatyzacja Racibórz",
+        slug: "klimatyzacja-raciborz",
         desc: "Montaż i serwis klimatyzacji dla domu i biura. Autoryzowany partner LG, Rotenso oraz Mitsubishi.",
         fullDesc: "Oferujemy kompleksowy montaż klimatyzacji w Raciborzu i na całym Śląsku. Jako autoryzowany partner marek LG, Rotenso oraz Mitsubishi, zapewniamy nowoczesne systemy split i multi-split z funkcją grzania i jonizacji powietrza. Darmowa wycena i dobór mocy u klienta.",
         features: ["Montaż klimatyzacji ściennej i kasetonowej", "Systemy multi-split do wielu pomieszczeń", "Klimatyzatory z funkcją grzania (pompy powietrze-powietrze)", "Energooszczędne modele inwerterowe A+++", "Bezpłatna wizja lokalna i profesjonalny projekt"]
@@ -12,6 +14,7 @@ const services = [
     {
         icon: "fa-temperature-arrow-down",
         title: "Chłodnictwo Przemysłowe",
+        slug: "chlodnictwo-przemyslowe-raciborz",
         desc: "Budowa komór chłodniczych i mroźniczych. Serwis agregatów Bitzer i Danfoss.",
         fullDesc: "Specjalizujemy się w profesjonalnym chłodnictwie dla gastronomii, handlu i przemysłu. Projektujemy i budujemy komory chłodnicze oraz mroźnicze w oparciu o niezawodne komponenty Bitzer i Danfoss. Zapewniamy szybki serwis gwarancyjny i pogwarancyjny.",
         features: ["Komory chłodnicze i mroźnicze na wymiar", "Agregaty skraplające i sprężarki przemysłowe", "Instalacje chłodnicze dla sklepów i hurtowni", "Systemy schładzania procesowego", "Przeglądy okresowe i serwis 24/7"]
@@ -19,6 +22,7 @@ const services = [
     {
         icon: "fa-tools",
         title: "Serwis i Konserwacja",
+        slug: "serwis-klimatyzacji-raciborz",
         desc: "Profesjonalny serwis klimatyzacji i chłodnictwa. Pomiary szczelności i odgrzybianie.",
         fullDesc: "Zapewniamy regularną konserwację urządzeń chłodniczych i klimatyzacyjnych, co gwarantuje ich dłuższą żywotność i mniejsze zużycie energii. Posiadamy uprawnienia F-gazowe. Wykonujemy odgrzybianie, czyszczenie parowników oraz uzupełnianie czynnika chłodniczego.",
         features: ["Okresowe przeglądy klimatyzacji", "Naprawa agregatów chłodniczych", "Dezynfekcja i odgrzybianie metodą ultradźwiękową", "Pomiary efektywności i szczelności układów", "Dojazd serwisu na terenie województwa śląskiego"]
@@ -26,6 +30,7 @@ const services = [
     {
         icon: "fa-box-open",
         title: "Wypożyczalnia Klimatyzatorów",
+        slug: "wypozyczalnia-klimatyzatorow-raciborz",
         desc: "Wynajem mobilnych jednostek chłodzących. Idealne rozwiązanie na eventy i upały.",
         fullDesc: "Oferujemy wynajem klimatyzatorów przenośnych o dużej wydajności. To doskonałe rozwiązanie dla biur, serwerowni oraz na imprezy okolicznościowe. Oferujemy transport, montaż rury odprowadzającej ciepło oraz szkolenie z obsługi.",
         features: ["Klimatyzatory przenośne od 3.5 do 15 kW", "Wynajem krótko- i długoterminowy", "Urządzenia gotowe do pracy w 5 minut", "Obsługa eventów, wesel i namiotów", "Możliwość wykupu sprzętu po sezonie"]
@@ -33,6 +38,7 @@ const services = [
     {
         icon: "fa-virus-slash",
         title: "Oczyszczacze i Wentylacja",
+        slug: "wentylacja-raciborz",
         desc: "Czyste powietrze bez smogu i alergenów. Systemy rekuperacji dla domów.",
         fullDesc: "Dbamy o jakość powietrza, którym oddychasz. Oferujemy profesjonalne oczyszczacze powietrza z filtrami HEPA oraz systemy wentylacji mechanicznej z odzyskiem ciepła (rekuperacja). Skuteczna walka z PM2.5, pyłkami i drobnoustrojami.",
         features: ["Wydajne oczyszczacze powietrza z nawilżaniem", "Systemy rekuperacji (wentylacja mechaniczna)", "Profesjonalne filtry węglowe i HEPA", "Pomiary jakości powietrza w pomieszczeniach", "Doradztwo w zakresie poprawy mikroklimatu"]
@@ -40,6 +46,7 @@ const services = [
     {
         icon: "fa-leaf",
         title: "Pompy Ciepła",
+        slug: "pompy-ciepla-raciborz",
         desc: "Ekologiczne ogrzewanie budynków. Pomoc w uzyskaniu dofinansowania Czyste Powietrze.",
         fullDesc: "Montujemy nowoczesne pompy ciepła powietrze-woda, które stanowią ekologiczną alternatywę dla kotłów węglowych i gazowych. Pomagamy w doborze odpowiedniego systemu oraz przygotowujemy dokumentację do programów dotacyjnych.",
         features: ["Pompy ciepła powietrze-woda uznanych marek", "Modernizacja kotłowni na systemy hybrydowe", "Integracja z fotowoltaiką", "Pomoc w dotacjach Czyste Powietrze", "Serwis i monitoring pracy układu"]
@@ -175,12 +182,9 @@ const Services = memo(() => {
                             <div className="service-icon"><i className={`fa-solid ${s.icon}`}></i></div>
                             <h3>{s.title}</h3>
                             <p>{s.desc}</p>
-                            <button
-                                className="btn-read-more"
-                                onClick={() => setActiveService(s)}
-                            >
+                            <Link to={`/${s.slug}`} className="btn-read-more">
                                 Czytaj więcej <i className="fa-solid fa-arrow-right"></i>
-                            </button>
+                            </Link>
                         </div>
                     ))}
                 </div>

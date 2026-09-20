@@ -1,7 +1,7 @@
 const blogArticles = [
     {
         "slug": "klimatyzacja-do-domu-jak-wybrac",
-        "title": "Jak wybrać klimatyzację do domu? Poradnik 2025",
+        "title": "Jak wybrać klimatyzację do domu? Praktyczny poradnik",
         "category": "Klimatyzacja",
         "excerpt": "Dobór klimatyzacji do domu to kluczowa decyzja. Podpowiadamy, na co zwrócić uwagę przy wyborze klimatyzatora do mieszkania i domu jednorodzinnego w Raciborzu.",
         "content": [
@@ -23,7 +23,7 @@ const blogArticles = [
             },
             {
                 "type": "heading",
-                "value": "Ile kosztuje klimatyzacja do domu w 2025 roku?"
+                "value": "Ile kosztuje klimatyzacja do domu?"
             },
             {
                 "type": "paragraph",

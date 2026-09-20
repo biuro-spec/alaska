@@ -1,6 +1,9 @@
 import { useState, useEffect, lazy, Suspense } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import './App.css'
+import Seo from './components/Seo'
+import uslugi, { TELEFON_TEL, EMAIL } from './data/uslugi'
+import PYTANIA from './data/faq'
 
 // Critical components (above the fold)
 import Hero from './components/Hero'
@@ -17,6 +20,7 @@ const ContactForm = lazy(() => import('./components/ContactForm'))
 const BlogPage = lazy(() => import('./components/BlogPage'))
 const BlogArticle = lazy(() => import('./components/BlogArticle'))
 const Realizacje = lazy(() => import('./pages/Realizacje'))
+const Usluga = lazy(() => import('./pages/Usluga'))
 const IntroScreen = lazy(() => import('./components/IntroScreen'))
 const CookieConsent = lazy(() => import('./components/CookieConsent'))
 
@@ -47,8 +51,6 @@ const NavLink = ({ hash, children, onClick }) => {
 
 const Navigation = ({ scrolled }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
-  const isBlog = location.pathname !== '/';
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -89,9 +91,81 @@ const Navigation = ({ scrolled }) => {
   );
 };
 
+// Dane firmy w jednym miejscu. Wcześniej schemat siedział w index.html z telefonem
+// 607 044 336, podczas gdy sekcja Salon podaje 607 376 336 — rozjechany NAP
+// (nazwa, adres, telefon) obniża pozycję w wynikach lokalnych, a katalogi
+// branżowe podają jeszcze trzeci adres niż strona.
+const FIRMA = {
+  '@type': 'HVACBusiness',
+  '@id': 'https://alaskarp.pl/#firma',
+  name: 'Alaska — Chłodnictwo i Klimatyzacja',
+  alternateName: 'Alaska Rafał Paszczyński',
+  description: 'Montaż, serwis i wypożyczalnia klimatyzacji oraz chłodnictwo przemysłowe w Raciborzu od 1997 roku.',
+  image: 'https://alaskarp.pl/og-image.png',
+  logo: 'https://alaskarp.pl/logo.png',
+  url: 'https://alaskarp.pl',
+  telephone: TELEFON_TEL,
+  email: EMAIL,
+  priceRange: '$$',
+  foundingDate: '1997',
+  areaServed: ['Racibórz', 'Kuźnia Raciborska', 'Wodzisław Śląski', 'Kędzierzyn-Koźle', 'Rybnik', 'Śląsk'],
+  sameAs: ['https://www.facebook.com/alaska.raciborz.3'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '1 Maja 4',
+    addressLocality: 'Racibórz',
+    postalCode: '47-400',
+    addressCountry: 'PL',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: 50.0915, longitude: 18.2192 },
+  contactPoint: [
+    { '@type': 'ContactPoint', telephone: TELEFON_TEL, contactType: 'serwis', areaServed: 'PL', availableLanguage: 'pl' },
+    { '@type': 'ContactPoint', telephone: '+48607376336', contactType: 'sprzedaż', areaServed: 'PL', availableLanguage: 'pl' },
+  ],
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '08:00',
+    closes: '17:00',
+  },
+  makesOffer: uslugi.map((u) => ({
+    '@type': 'Offer',
+    itemOffered: { '@type': 'Service', name: u.h1, url: `https://alaskarp.pl/${u.slug}` },
+  })),
+};
+
+const SCHEMAT_STRONY_GLOWNEJ = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    FIRMA,
+    {
+      '@type': 'WebSite',
+      '@id': 'https://alaskarp.pl/#strona',
+      url: 'https://alaskarp.pl',
+      name: 'Alaska — Chłodnictwo i Klimatyzacja',
+      inLanguage: 'pl-PL',
+      publisher: { '@id': 'https://alaskarp.pl/#firma' },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: PYTANIA.map((p) => ({
+        '@type': 'Question',
+        name: p.q,
+        acceptedAnswer: { '@type': 'Answer', text: p.a },
+      })),
+    },
+  ],
+};
+
 function HomePage() {
   return (
     <main>
+      <Seo
+        title="Klimatyzacja i chłodnictwo Racibórz — montaż i serwis | Alaska"
+        description="Klimatyzacja, chłodnictwo i pompy ciepła w Raciborzu od 1997 roku. Montaż, serwis, wypożyczalnia. Bezpłatna wycena. Tel. 607 044 336."
+        path="/"
+        jsonLd={SCHEMAT_STRONY_GLOWNEJ}
+      />
       <Hero />
       <Stats />
       <About />
@@ -150,15 +224,37 @@ function HashScrollHandler() {
   return null;
 }
 
+/**
+ * Ekran powitalny pokazujemy TYLKO przy pierwszym wejściu na stronę główną
+ * w danej sesji. Wcześniej zasłaniał treść przez 4 sekundy na każdym adresie,
+ * także komuś, kto wszedł z Google prosto na stronę usługową — a to 60%
+ * kliknięć z komórki, które najszybciej wracają do wyników.
+ */
+function czyPokazacIntro(sciezka) {
+  if (sciezka !== '/') return false
+  try {
+    if (sessionStorage.getItem('alaska_intro') === '1') return false
+  } catch {
+    // Tryb prywatny albo zablokowane dane witryny — wtedy po prostu pokazujemy.
+  }
+  return true
+}
+
 function App() {
+  const location = useLocation()
   const [scrolled, setScrolled] = useState(false)
-  const [showIntro, setShowIntro] = useState(true)
+  const [showIntro, setShowIntro] = useState(() => czyPokazacIntro(location.pathname))
 
   useEffect(() => {
     if (showIntro) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
+      try {
+        sessionStorage.setItem('alaska_intro', '1')
+      } catch {
+        // Bez zapisu ekran pokaże się ponownie — to gorsze doświadczenie, nie błąd.
+      }
     }
   }, [showIntro])
 
@@ -185,6 +281,12 @@ function App() {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />
           <Route path="/realizacje" element={<Realizacje />} />
+          {/* Trasy usługowe wypisane jawnie z danych, a nie jako "/:slug" —
+              catch-all przechwytywałby też literówki i stare adresy, które
+              mają się kończyć przekierowaniem 301 albo stroną 404. */}
+          {uslugi.map((u) => (
+            <Route key={u.slug} path={`/${u.slug}`} element={<Usluga slug={u.slug} />} />
+          ))}
         </Routes>
       </Suspense>
 

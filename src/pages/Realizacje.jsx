@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../config';
+import Seo from '../components/Seo';
 
 // Stałe realizacje (lokalne, ładują się natychmiast) — pokazane pierwsze,
 // reszta z panelu (Google Dysk) doładowuje się w tle.
@@ -32,7 +33,6 @@ export default function Realizacje() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        document.title = 'Realizacje - montaż klimatyzacji i chłodnictwa | Alaska Racibórz';
         fetch(API_URL + '?action=getRealizacje')
             .then(r => r.json())
             .then(res => {
@@ -54,6 +54,11 @@ export default function Realizacje() {
 
     return (
         <main className="realizacje-page">
+            <Seo
+                title="Realizacje — montaż klimatyzacji i chłodnictwa | Alaska Racibórz"
+                description="Zdjęcia naszych montaży klimatyzacji, komór chłodniczych i instalacji w Raciborzu i okolicy. Przykłady prac Alaska od 1997 roku."
+                path="/realizacje"
+            />
             <div className="container">
                 <div className="realizacje-header">
                     <span className="realizacje-eyebrow">Nasze prace</span>
