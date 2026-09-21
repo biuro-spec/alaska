@@ -29,12 +29,43 @@
   # Reszta /pl/* (kontakt, salon, cokolwiek jeszcze siedzi w indeksie) na stronę główną
   RewriteRule ^pl/.*$                   /                                      [L,R=301]
 
+  # ——— Konsolidacja bloga (21.09.2026) ————————————————————————————
+  # 13 z 16 artykułów dublowało stronę usługową napisaną dzień wcześniej —
+  # /blog/wypozyczalnia-klimatyzatorow-raciborz i /wypozyczalnia-klimatyzatorow-raciborz
+  # to był ten sam slug pod dwoma adresami. Artykuły miały średnio 1193 znaki
+  # (ok. 200 słów) i Google odmawiał ich indeksowania: 11 nigdy nie pobrał,
+  # 3 pobrał i odłożył. Treść żyje dalej na stronach usługowych.
+  RewriteRule ^blog/montaz-klimatyzacji-raciborz-co-warto-wiedziec/?$  /montaz-klimatyzacji-raciborz     [L,R=301]
+  RewriteRule ^blog/klimatyzacja-w-bloku-formalnosci-i-montaz/?$       /montaz-klimatyzacji-raciborz     [L,R=301]
+  RewriteRule ^blog/klimatyzacja-multi-split-wiele-pokojow/?$          /montaz-klimatyzacji-raciborz     [L,R=301]
+  RewriteRule ^blog/serwis-klimatyzacji-jak-czesto-i-dlaczego/?$       /serwis-klimatyzacji-raciborz     [L,R=301]
+  RewriteRule ^blog/przygotowanie-klimatyzacji-do-sezonu/?$            /serwis-klimatyzacji-raciborz     [L,R=301]
+  # Wzorzec z „czysto[^/]*-powietrza" łapie zarazem prawdziwy slug (czystosc)
+  # i wariant z polskimi znakami (czystość), który Google trzyma jako 404 od maja
+  # 2026. Osobna reguła na formę zakodowaną procentami nic by nie dała: w kontekście
+  # katalogowym mod_rewrite dopasowuje ścieżkę już zdekodowaną.
+  RewriteRule ^blog/klimatyzacja-a-zdrowie-alergeny-czysto[^/]*-powietrza/?$ /czyszczenie-klimatyzacji-raciborz [L,R=301]
+  RewriteRule ^blog/pompy-ciepla-co-to-jest-i-jak-dziala/?$            /pompy-ciepla-raciborz            [L,R=301]
+  RewriteRule ^blog/dofinansowanie-czyste-powietrze-pompa-ciepla/?$    /pompy-ciepla-raciborz            [L,R=301]
+  RewriteRule ^blog/pompa-ciepla-a-ogrzewanie-podlogowe/?$             /pompy-ciepla-raciborz            [L,R=301]
+  RewriteRule ^blog/chlodnictwo-przemyslowe-komory-chlodnicze/?$       /chlodnictwo-przemyslowe-raciborz [L,R=301]
+  RewriteRule ^blog/chlodzenie-sklepow-i-gastronomii/?$                /chlodnictwo-przemyslowe-raciborz [L,R=301]
+  RewriteRule ^blog/oczyszczacz-powietrza-czy-warto-kupic/?$           /wentylacja-raciborz              [L,R=301]
+  RewriteRule ^blog/wypozyczalnia-klimatyzatorow-raciborz/?$           /wypozyczalnia-klimatyzatorow-raciborz [L,R=301]
+
   # ——— Serwowanie ——————————————————————————————————————————————————
   RewriteRule ^index\.html$ - [L]
 
   # Trasa z własnym prerenderem: /montaz-klimatyzacji-raciborz -> montaz-klimatyzacji-raciborz.html
+  #
+  # BEZ warunku `!-d` — i to jest celowe. Na serwerze leży zarazem katalog
+  # `blog/` (artykuły) i plik `blog.html` (strona listy). Z `!-d` reguła nie
+  # odpalała się dla /blog, Apache próbował wylistować katalog i zwracał 403
+  # (wykryte 21.09.2026; ta sama pułapka co `badania.html` w life-centrum).
+  # Bezpiecznik stanowi warunek `-f` na pliku docelowym: /panel to katalog,
+  # ale panel.html nie istnieje, więc reguła go nie dotyka i panel/index.html
+  # serwuje się normalnie.
   RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{DOCUMENT_ROOT}/$1.html -f
   RewriteRule ^(.+?)/?$ /$1.html [L]
 

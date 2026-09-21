@@ -18,12 +18,11 @@ const categoryIcons = {
 };
 
 const BlogSection = memo(() => {
-    // 3 artykuły z różnych kategorii (jeden z każdej)
-    const featured = [
-        blogArticles.find(a => a.category === 'Klimatyzacja'),
-        blogArticles.find(a => a.category === 'Pompy ciepła'),
-        blogArticles.find(a => a.category === 'Chłodnictwo'),
-    ].filter(Boolean);
+    // Pierwsze trzy artykuły. Wcześniej brało po jednym z kategorii Klimatyzacja,
+    // Pompy ciepła i Chłodnictwo — po konsolidacji bloga (21.09.2026) dwie ostatnie
+    // nie mają już artykułów, bo ich treść przeniosła się na strony usługowe,
+    // i sekcja pokazywałaby jedną kartę zamiast trzech.
+    const featured = blogArticles.slice(0, 3);
 
     return (
         <section className="blog-section-home services-frost">

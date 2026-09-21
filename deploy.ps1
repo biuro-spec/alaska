@@ -73,6 +73,11 @@ if ((Get-Content "$Dist\powloka.html" -Raw) -notmatch 'noindex') {
   throw 'powloka.html bez noindex - nie wysylam.'
 }
 
+# Kazde przekierowanie 301 musi miec istniejacy cel - inaczej bot idzie za nim
+# i laduje na powloce z noindex, a z zewnatrz wyglada to na dzialajace.
+node scripts/sprawdz-przekierowania.mjs
+if ($LASTEXITCODE -ne 0) { throw 'Przekierowania w .htaccess wskazuja na nieistniejace strony - nie wysylam.' }
+
 # Panel realizacji to administracja - nie ma czego szukac w Google
 $panel = "$Dist\panel\index.html"
 if ((Test-Path $panel) -and ((Get-Content $panel -Raw) -notmatch 'noindex')) {
@@ -123,6 +128,7 @@ $lines.Add('option batch abort')
 $lines.Add('option confirm off')
 $lines.Add('open ftp://' + $userQ + '@' + $Host_ + ':21 -passive=on -password="' + $passQ + '"')
 $lines.Add('cd "' + $Remote + '"')
+
 # Gwiazdka wysyla ZAWARTOSC dist, a nie sam katalog dist. Bez niej powstalby
 # /public_html/dist i strona zostalaby stara.
 $lines.Add('put "' + $Dist + '\*" "' + $Remote + '/"')
@@ -138,6 +144,42 @@ $kod = $LASTEXITCODE
 Get-Content $log | Select-Object -Last 30
 Remove-Item $tmp, $log -Force
 if ($kod -ne 0) { throw "WinSCP zakonczyl z kodem $kod" }
+
+# --- Sprzatanie po wycofanych stronach ---------------------------------------
+# `put` nie kasuje, wiec pliki stron wycofanych z serwisu zostawaly na serwerze.
+# Przekierowania 301 w .htaccess stoja przed regula serwowania, wiec sie nie
+# pokazuja - ale zostaja jako pulapka, gdyby kiedys reguly sie zmienily.
+#
+# OSOBNE wywolanie WinSCP z wlasnym kodem wyjscia: plik juz skasowany przy
+# poprzednim wdrozeniu zwraca blad, a WinSCP ustawia wtedy kod 1 dla CALEGO
+# przebiegu mimo `batch continue`. Przy wspolnym wywolaniu wygladalo to na
+# nieudana wysylke, choc wszystkie pliki poszly (21.09.2026).
+
+$wycofane = @(
+  'blog/montaz-klimatyzacji-raciborz-co-warto-wiedziec', 'blog/klimatyzacja-w-bloku-formalnosci-i-montaz',
+  'blog/klimatyzacja-multi-split-wiele-pokojow', 'blog/serwis-klimatyzacji-jak-czesto-i-dlaczego',
+  'blog/przygotowanie-klimatyzacji-do-sezonu', 'blog/klimatyzacja-a-zdrowie-alergeny-czystosc-powietrza',
+  'blog/pompy-ciepla-co-to-jest-i-jak-dziala', 'blog/dofinansowanie-czyste-powietrze-pompa-ciepla',
+  'blog/pompa-ciepla-a-ogrzewanie-podlogowe', 'blog/chlodnictwo-przemyslowe-komory-chlodnicze',
+  'blog/chlodzenie-sklepow-i-gastronomii', 'blog/oczyszczacz-powietrza-czy-warto-kupic',
+  'blog/wypozyczalnia-klimatyzatorow-raciborz'
+) | Where-Object { -not (Test-Path (Join-Path $Dist (($_ -replace '/', '\') + '.html'))) }
+
+if ($wycofane) {
+  $sprzat = New-Object System.Collections.Generic.List[string]
+  $sprzat.Add('option batch continue')
+  $sprzat.Add('option confirm off')
+  $sprzat.Add('open ftp://' + $userQ + '@' + $Host_ + ':21 -passive=on -password="' + $passQ + '"')
+  foreach ($n in $wycofane) { $sprzat.Add('rm "' + $Remote + '/' + $n + '.html"') }
+  $sprzat.Add('exit')
+
+  $tmp2 = "$env:TEMP\ws_alaska_sprzat.txt"
+  Set-Content $tmp2 $sprzat -Encoding ascii
+  $log2 = "$env:TEMP\ws_alaska_sprzat_out.txt"
+  cmd /c "`"C:\Program Files (x86)\WinSCP\WinSCP.com`" /script=`"$tmp2`" /ini=nul > `"$log2`" 2>&1"
+  Remove-Item $tmp2, $log2 -Force
+  Write-Host ">> Sprzatanie: $($wycofane.Count) wycofanych stron (nieistniejace pomijane)" -ForegroundColor DarkGray
+}
 
 Write-Host ""
 Write-Host ">> OK - https://alaskarp.pl zaktualizowane." -ForegroundColor Green
