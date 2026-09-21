@@ -210,13 +210,20 @@ const Usluga = ({ slug: slugZTrasy }) => {
               <div className="blog-related">
                 <h3>Zobacz także</h3>
                 <div className="blog-related-grid">
+                  {/* Klasy z bloga (.blog-card): białe tło, brak podkreślenia i własny
+                      kolor akapitu. Wcześniej stała tu wymyślona klasa
+                      .blog-related-card, której w App.css nie ma — karty renderowały
+                      się jako gołe, podkreślone linki (21.09.2026). */}
                   {powiazane.map((u) => (
-                    <Link key={u.slug} to={`/${u.slug}`} className="blog-related-card">
-                      <span className="blog-article-category">
+                    <Link key={u.slug} to={`/${u.slug}`} className="blog-card blog-card-small">
+                      <span className="blog-card-category">
                         <i className={`fa-solid ${u.ikona}`}></i> Oferta
                       </span>
                       <h4>{u.h1}</h4>
                       <p>{u.lead}</p>
+                      <span className="blog-card-link">
+                        Zobacz <i className="fa-solid fa-arrow-right"></i>
+                      </span>
                     </Link>
                   ))}
                 </div>
