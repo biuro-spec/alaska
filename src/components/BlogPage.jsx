@@ -81,7 +81,7 @@ const BlogPage = memo(() => {
                                 <span className="blog-card-category">{featuredArticle.category}</span>
                                 <h2>{featuredArticle.title}</h2>
                                 <div className="blog-article-meta featured-meta">
-                                    <span><i className="fa-regular fa-clock"></i> Czas czytania: ok. {featuredArticle.readTime || 3} min</span>
+                                    <span><i className="fa-solid fa-clock"></i> Czas czytania: ok. {featuredArticle.readTime || 3} min</span>
                                 </div>
                                 <p>{featuredArticle.excerpt}</p>
                                 <Link to={`/blog/${featuredArticle.slug}`} className="btn btn-primary">

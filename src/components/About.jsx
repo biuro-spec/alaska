@@ -19,6 +19,8 @@ const About = memo(() => {
                 <div className={`about-hero-photo reveal ${isVisible ? 'reveal-visible' : ''}`}>
                     <img
                         src="/images/about-hero.webp"
+                        srcSet="/images/about-hero-760.webp 760w, /images/about-hero.webp 1280w"
+                        sizes="(max-width: 768px) 100vw, 1280px"
                         alt="Siedziba i flota Alaska - klimatyzacja i chłodnictwo w Raciborzu"
                         loading="lazy"
                         decoding="async"

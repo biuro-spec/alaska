@@ -184,6 +184,14 @@ for (const trasa of trasy()) {
         // Baner cookies i ekran powitalny zasłaniają treść i nie mają czego szukać w indeksie
         root.querySelectorAll('.intro-overlay, .cookie-consent, .cookie-banner').forEach((el) => el.remove());
       }
+      // Arkusze wczytywane bez blokowania renderowania mają w index.html
+      // media="print" + onload="this.media='all'". Zanim zrobimy zrzut, onload
+      // już się wykonał i w DOM stoi media="all" — zapisanie tego stanu robi
+      // z nich arkusze BLOKUJĄCE na każdej prerenderowanej stronie.
+      // Zmierzone 02.10.2026: PageSpeed 66 na komórce, 3120 ms blokady,
+      // FCP 4,8 s. Przywracamy stan wyjściowy.
+      document.head.querySelectorAll('link[rel="stylesheet"][onload*="this.media"]')
+        .forEach((el) => el.setAttribute('media', 'print'));
       // React 19 wynosi <title>/<meta>/<link> z komponentu Seo do <head>, obok
       // statycznych z index.html. Z każdego klucza zostaje JEDEN tag: przy
       // duplikacie usuwamy ten, który był w powłoce.
@@ -215,6 +223,9 @@ for (const trasa of trasy()) {
 
     // ——— Strażnik: pusty prerender jest GORSZY niż żaden, bo wygląda na udany.
     if (!/<h1/i.test(html)) throw new Error('brak <h1> po renderze');
+    if (/<link[^>]*rel="stylesheet"[^>]*media="all"[^>]*onload/.test(html)) {
+      throw new Error('arkusz z onload ma media="all" — zapisany jako blokujący renderowanie');
+    }
     const canonicale = [...html.matchAll(/<link rel="canonical"/g)].length;
     if (canonicale !== 1) throw new Error(`${canonicale} canonicali zamiast jednego`);
     const oczekiwany = `${BAZOWY_URL}${trasa === '/' ? '/' : trasa}`;

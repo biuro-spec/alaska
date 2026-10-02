@@ -30,19 +30,17 @@
   <!-- Critical CSS inline for faster FCP -->
   <style>:root{--bg-dark:#030712;--bg-card:rgba(17,24,39,.7);--primary:#3b82f6;--text-main:#f9fafb;--text-muted:#9ca3af;--glass-border:rgba(255,255,255,.1);--font-heading:"Outfit",sans-serif;--font-body:"Inter",sans-serif}*{margin:0;padding:0;box-sizing:border-box}body{min-height:100vh;background:radial-gradient(circle at top right,#1e293b,#030712);color:var(--text-main);overflow-x:hidden;font-family:var(--font-body);line-height:1.45}.container{max-width:1200px;margin:0 auto;padding:0 2rem}.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 0;transition:all .4s}.nav-scrolled{background:rgba(3,7,18,.9);backdrop-filter:blur(12px);padding:.6rem 0}.nav-content{display:flex;align-items:center;justify-content:space-between}.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background-size:cover;background-position:center}</style>
 
-  <!-- DNS prefetch / preconnect for external resources -->
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-  <!-- Fonts (reduced weights, display=swap for fast FCP) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@600;800&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@600;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@600;800&display=swap" rel="stylesheet"></noscript>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-  <style>@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:swap;src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2) format("woff2")}@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400;font-display:swap;src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2) format("woff2")}@font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:swap;src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2) format("woff2")}</style>
+  <!-- Fonty: wlasny wykroj pod polski alfabet (scripts/build-fonty.mjs).
+       Wczesniej Google Fonts: 182 KB i dwa obce polaczenia na sciezce krytycznej. -->
+  <link rel="stylesheet" href="/fonty/fonty.css">
+  <link rel="preload" as="font" type="font/woff2" href="/fonty/inter-400.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonty/outfit-800.woff2" crossorigin>
+
+  <!-- Ikony: wlasny wykroj Font Awesome (scripts/build-ikony.mjs).
+       Wczesniej trzy pelne rodziny z cdnjs = 278 KB fontow + 18 KB arkusza. -->
+  <link rel="stylesheet" href="/ikony/ikony.css">
+  <link rel="preload" as="font" type="font/woff2" href="/ikony/fa-solid-900-wykroj.woff2" crossorigin>
 
   <!-- Preload critical hero image -->
   <link rel="preload" as="image" type="image/webp" href="/hero-refrigeration.webp" fetchpriority="high">

@@ -14,7 +14,7 @@ const Footer = memo(() => (
                 <div className="footer-brand">
                     <div className="footer-logo">
                         <div className="logo-glass">
-                            <img src="/logo.webp" alt="Alaska Logo" className="logo-img" />
+                            <img src="/logo-256.webp" alt="Alaska Logo" className="logo-img" width="52" height="52" loading="lazy" decoding="async" />
                         </div>
                     </div>
                     <p className="footer-desc">

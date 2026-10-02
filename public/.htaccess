@@ -69,6 +69,14 @@
   RewriteCond %{DOCUMENT_ROOT}/$1.html -f
   RewriteRule ^(.+?)/?$ /$1.html [L]
 
+  # Żądanie PLIKU (kropka w ostatnim członie adresu) nie jest trasą aplikacji —
+  # brak pliku to 404, a nie powłoka HTML z kodem 200. Bez tego każdy nieistniejący
+  # zasób udawał, że istnieje: PageSpeed zgłosił 02.10.2026 „Malformed JSON in
+  # manifest: Unexpected token '<'", bo /ai-catalog.json zwracał dokument HTML.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} \.[a-zA-Z0-9]{2,5}$
+  RewriteRule . - [L,R=404]
+
   # Wszystko pozostałe: czysta powłoka SPA z noindex.
   # Wcześniej fallback szedł na index.html, więc każdy literówkowy adres
   # był duplikatem strony głównej z canonicalem „/" i „index, follow".

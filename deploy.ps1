@@ -78,6 +78,11 @@ if ((Get-Content "$Dist\powloka.html" -Raw) -notmatch 'noindex') {
 node scripts/sprawdz-przekierowania.mjs
 if ($LASTEXITCODE -ne 0) { throw 'Przekierowania w .htaccess wskazuja na nieistniejace strony - nie wysylam.' }
 
+# Fonty i ikony sa wlasnym wykrojem - literowka w sciezce albo brakujacy znak
+# daje strone, ktora laduje sie SZYBCIEJ i wyglada na sprawna, tylko bez ikon.
+node scripts/sprawdz-fonty.mjs
+if ($LASTEXITCODE -ne 0) { throw 'Wlasne fonty albo ikony sie nie rysuja - nie wysylam.' }
+
 # Panel realizacji to administracja - nie ma czego szukac w Google
 $panel = "$Dist\panel\index.html"
 if ((Test-Path $panel) -and ((Get-Content $panel -Raw) -notmatch 'noindex')) {

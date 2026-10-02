@@ -5,7 +5,8 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background-image: url("/hero-summer.webp");
+  /* Komorka dostaje wersje 27 KB zamiast 119 KB - patrz media query nizej */
+  background-image: url("/hero-summer-mobile.webp");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -231,5 +232,12 @@
   .faq-question-hero span {
     font-size: 1.05rem;
     line-height: 1.4;
+  }
+}
+
+/* Od tabletu w gore pelne tlo; ponizej zostaje wersja lekka z reguly bazowej. */
+@media (min-width: 768px) {
+  .faq-hero-style {
+    background-image: url("/hero-summer.webp");
   }
 }

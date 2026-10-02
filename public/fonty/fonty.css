@@ -1,0 +1,7 @@
+/* Wygenerowane przez scripts/build-fonty.mjs — nie edytować ręcznie.
+   Wykrój pod polski alfabet; wcześniej Google Fonts, 182 KB i dwa obce połączenia. */
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url(/fonty/inter-400.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url(/fonty/inter-600.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:700;font-display:swap;src:url(/fonty/inter-700.woff2) format("woff2")}
+@font-face{font-family:"Outfit";font-style:normal;font-weight:600;font-display:swap;src:url(/fonty/outfit-600.woff2) format("woff2")}
+@font-face{font-family:"Outfit";font-style:normal;font-weight:800;font-display:swap;src:url(/fonty/outfit-800.woff2) format("woff2")}

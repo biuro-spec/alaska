@@ -169,7 +169,7 @@ const Services = memo(() => {
 
             <div className="container">
                 <div className={`section-header reveal ${isVisible ? 'reveal-visible' : ''}`}>
-                    <h2><i className="fa-regular fa-snowflake frost-header-icon"></i> Klimatyzacja, chłodnictwo i pompy ciepła</h2>
+                    <h2><i className="fa-solid fa-snowflake frost-header-icon"></i> Klimatyzacja, chłodnictwo i pompy ciepła</h2>
                     <p>Profesjonalny dobór, montaż i serwis urządzeń klimatyzacyjnych w Raciborzu i na Śląsku.</p>
                 </div>
                 <div className="services-grid">

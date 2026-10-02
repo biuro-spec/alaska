@@ -77,7 +77,7 @@ const IntroScreen = ({ onEnter }) => {
 
             <div className="intro-content">
                 <div className="intro-logo-wrap">
-                    <img src="/logo.webp" alt="Alaska Logo" className="intro-logo" />
+                    <img src="/logo-512.webp" alt="Alaska Logo" className="intro-logo" width="250" height="250" decoding="async" />
                 </div>
                 <div className="intro-text-group">
                     <div className="intro-name-flow" role="presentation" aria-hidden="true">

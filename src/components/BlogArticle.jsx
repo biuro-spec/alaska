@@ -131,7 +131,7 @@ const BlogArticle = memo(() => {
                         <span className="blog-article-category">{article.category}</span>
                         <h1>{article.title}</h1>
                         <div className="blog-article-meta">
-                            <span><i className="fa-regular fa-clock"></i> Czas czytania: ok. {article.readTime || 3} min</span>
+                            <span><i className="fa-solid fa-clock"></i> Czas czytania: ok. {article.readTime || 3} min</span>
                         </div>
                         <p className="blog-hero-desc">{article.excerpt}</p>
                     </div>
