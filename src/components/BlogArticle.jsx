@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import blogArticles, { BLOG_CATEGORIES } from '../data/blogArticles';
+import blogArticles, { BLOG_CATEGORIES, tytulSeoBloga } from '../data/blogArticles';
 import Seo from './Seo';
 
 const BlogArticle = memo(() => {
@@ -85,6 +85,8 @@ const BlogArticle = memo(() => {
                 mainEntityOfPage: urlArtykulu,
                 inLanguage: 'pl-PL',
                 articleSection: article.category,
+                ...(article.datePublished ? { datePublished: article.datePublished } : {}),
+                ...(article.dateModified ? { dateModified: article.dateModified } : {}),
                 author: { '@type': 'Organization', name: 'Alaska — Chłodnictwo i Klimatyzacja' },
                 publisher: { '@id': 'https://alaskarp.pl/#firma' },
             },
@@ -112,7 +114,7 @@ const BlogArticle = memo(() => {
     return (
         <div className="blog-page">
             <Seo
-                title={`${article.title} | Alaska Racibórz`}
+                title={tytulSeoBloga(article)}
                 description={article.excerpt}
                 path={`/blog/${article.slug}`}
                 image={getHeroImage(article.category)}

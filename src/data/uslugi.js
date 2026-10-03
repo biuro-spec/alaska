@@ -346,7 +346,7 @@ const uslugi = [
     slug: 'pompy-ciepla-raciborz',
     fraza: 'pompy ciepła racibórz',
     tytul: 'Pompy ciepła Racibórz — montaż i serwis | Alaska',
-    opis: 'Pompy ciepła powietrze-woda w Raciborzu: dobór, montaż, serwis i pomoc w dofinansowaniu z programu Czyste Powietrze. Tel. 607 044 336.',
+    opis: 'Pompy ciepła powietrze-woda w Raciborzu: dobór, montaż i serwis. Dotacja Czyste Powietrze do 35 200 zł na pompę. Pomagamy w dokumentach. Tel. 607 044 336.',
     h1: 'Pompy ciepła Racibórz',
     lead: 'Dobieramy i montujemy pompy ciepła powietrze-woda. Pomagamy przejść przez dokumentację programu Czyste Powietrze.',
     ikona: 'fa-leaf',
@@ -365,6 +365,15 @@ const uslugi = [
         ],
       },
       {
+        naglowek: 'Jak wygląda montaż pompy ciepła',
+        tresc: [
+          'Dobry montaż zaczyna się przed przyjazdem ekipy — od oszacowania, ile ciepła budynek naprawdę potrzebuje. Za duża pompa pracuje w krótkich cyklach i szybciej się zużywa, za mała częściej sięga po grzałkę elektryczną. Jedno i drugie widać później na rachunku.',
+          'Jednostka zewnętrzna stoi na fundamencie albo konsoli, z dala od okien sypialni, z odpływem skroplin, który zimą nie zamarznie. W kotłowni montuje się jednostkę wewnętrzną lub moduł hydrauliczny, zasobnik ciepłej wody użytkowej i — gdy wymaga tego instalacja — bufor.',
+          'O tym, czy pompa grzeje oszczędnie, decyduje w dużej mierze uruchomienie: ustawienie krzywej grzewczej pod konkretny budynek, a nie fabrycznych nastaw. To etap, którego nie widać, a który najczęściej odróżnia instalację tanią w eksploatacji od drogiej.',
+          'W typowym domu jednorodzinnym montaż trwa zwykle od jednego do kilku dni — dłużej, gdy trzeba przebudować kotłownię albo wymienić część grzejników.',
+        ],
+      },
+      {
         naglowek: 'Pompa ciepła a ogrzewanie podłogowe',
         tresc: [
           'Ogrzewanie podłogowe pracuje na temperaturze zasilania rzędu 30–35°C, podczas gdy klasyczne grzejniki potrzebują 50–70°C. Dla pompy ciepła to zasadnicza różnica: im niższa temperatura zasilania, tym wyższa sprawność i niższy rachunek.',
@@ -372,11 +381,31 @@ const uslugi = [
         ],
       },
       {
-        naglowek: 'Dofinansowanie Czyste Powietrze',
-        doPotwierdzenia: true,
+        // Kwoty z oficjalnego załącznika nr 2 do programu (koszty kwalifikowane,
+        // wersja po zmianach od 20.07.2026), czystepowietrze.gov.pl — sprawdzone
+        // 03.10.2026. Przy zmianie programu poprawić także pytanie w FAQ niżej.
+        naglowek: 'Dofinansowanie Czyste Powietrze 2026',
         tresc: [
-          'Wymiana kotła na paliwo stałe na pompę ciepła jest objęta dofinansowaniem z programu Czyste Powietrze. Wysokość wsparcia zależy od dochodu gospodarstwa domowego i zakresu prac.',
-          'Pomagamy skompletować dokumentację: dobór urządzenia z wymaganymi parametrami, zaświadczenia i dokumenty rozliczeniowe. Zasady programu bywają zmieniane, więc aktualny zakres i progi potwierdzamy na etapie wyceny.',
+          'Pompa ciepła powietrze-woda o podwyższonej klasie efektywności energetycznej może dostać z programu Czyste Powietrze dotację do 14 080 zł na poziomie podstawowym, do 24 640 zł na poziomie podwyższonym i do 35 200 zł na poziomie najwyższym. Który poziom przysługuje, zależy od dochodu w gospodarstwie domowym. Dotacja obejmuje pompę z osprzętem, regulatorem temperatury, buforem i zasobnikiem ciepłej wody; VAT nie jest kosztem kwalifikowanym.',
+          'Warunek, o którym łatwo zapomnieć: model musi być wpisany na listę ZUM (Lista Zielonych Urządzeń i Materiałów) w dniu wystawienia faktury. Dlatego urządzenie warto sprawdzić na liście, zanim zostanie zamówione.',
+          'Dotację może dostać również pompa ciepła powietrze-powietrze, czyli klimatyzator z funkcją grzania wpisany na listę ZUM — do 4 480 zł, 7 840 zł albo 11 200 zł, zależnie od poziomu.',
+          'Od 2027 roku program nie będzie już finansował ogrzewania elektrycznego innego niż pompy ciepła. Progi dochodowe, wzory wniosków i pełne warunki są na stronie czystepowietrze.gov.pl. Pomagamy skompletować dokumenty po stronie wykonawcy.',
+        ],
+      },
+      {
+        // Źródło: podatki.gov.pl, „Ulga termomodernizacyjna PIT” — sprawdzone 03.10.2026.
+        naglowek: 'Ulga termomodernizacyjna',
+        tresc: [
+          'Niezależnie od dotacji wydatki na pompę ciepła z osprzętem można odliczyć od dochodu w uldze termomodernizacyjnej — do 53 000 zł na podatnika, który jest właścicielem lub współwłaścicielem domu jednorodzinnego. Odlicza się tylko tę część, której nie pokryła dotacja.',
+          'Uwaga na różnicę: klimatyzator z funkcją grzania nie jest wydatkiem termomodernizacyjnym i do ulgi się nie kwalifikuje, nawet jeśli w środku pracuje pompa ciepła. Ulga obejmuje urządzenia, których zadaniem jest ogrzewanie budynku.',
+        ],
+      },
+      {
+        naglowek: 'Od czego zależy cena pompy ciepła',
+        tresc: [
+          'Na koszt najbardziej wpływa moc pompy, a ta wynika z zapotrzebowania budynku na ciepło. Dlatego rzetelnej ceny nie da się podać przez telefon na podstawie samego metrażu — potrzebne są oględziny.',
+          'Znaczenie mają też: rodzaj urządzenia (monoblok czy split), pojemność zasobnika ciepłej wody i ewentualny bufor, zakres przeróbek w kotłowni i instalacji, demontaż starego kotła oraz prace elektryczne, w tym osobny obwód zasilania.',
+          'Porównując oferty, warto liczyć kwotę po odjęciu dotacji i ulgi termomodernizacyjnej — dopiero ona pokazuje rzeczywisty koszt inwestycji.',
         ],
       },
     ],
@@ -389,8 +418,24 @@ const uslugi = [
     ],
     faq: [
       {
+        q: 'Ile wynosi dotacja do pompy ciepła w 2026 roku?',
+        a: 'W programie Czyste Powietrze pompa ciepła powietrze-woda o podwyższonej klasie efektywności energetycznej może dostać do 14 080 zł (poziom podstawowy), 24 640 zł (podwyższony) lub 35 200 zł (najwyższy). Poziom zależy od dochodu, a model musi być wpisany na listę ZUM w dniu wystawienia faktury.',
+      },
+      {
+        q: 'Czy można połączyć dotację z ulgą termomodernizacyjną?',
+        a: 'Tak. W uldze termomodernizacyjnej odliczasz od dochodu tę część wydatków, której nie pokryła dotacja — łącznie do 53 000 zł na podatnika.',
+      },
+      {
         q: 'Czy pompa ciepła działa przy dużym mrozie?',
         a: 'Tak, pompy powietrze-woda pracują także przy temperaturach ujemnych, choć ich sprawność wtedy spada. W budynkach o większych stratach ciepła stosujemy układ hybrydowy z kotłem jako wsparciem przy największych mrozach.',
+      },
+      {
+        q: 'Pompa ciepła monoblok czy split — czym się różnią?',
+        a: 'W monobloku cały obieg czynnika chłodniczego jest zamknięty w jednostce zewnętrznej, a do domu płynie już woda instalacji grzewczej. W układzie split czynnik chłodniczy dochodzi do jednostki wewnętrznej, co wymaga połączenia rurami chłodniczymi. Wybór zależy od budynku i miejsca na urządzenia.',
+      },
+      {
+        q: 'Jak długo trwa montaż pompy ciepła?',
+        a: 'W typowym domu jednorodzinnym zwykle od jednego do kilku dni. Dłużej trwa, gdy trzeba przebudować kotłownię albo wymienić część grzejników.',
       },
       {
         q: 'Czy pompa ciepła nadaje się do starego domu?',

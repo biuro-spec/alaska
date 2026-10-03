@@ -2385,6 +2385,19 @@ figcaption {
     gap: 2rem;
   }
 }
+/* Kolumna siatki domyślnie nie zwęża się poniżej najdłuższego słowa — jedno
+   „termomodernizacyjna” w nagłówku rozpychało stronę pompy ciepła do 409 px
+   przy ekranie 390 px. min-width: 0 pozwala kolumnie się zwęzić, a długie
+   słowa łamią się (z dzieleniem, gdzie przeglądarka zna polski). */
+.blog-article-layout > * {
+  min-width: 0;
+}
+.blog-rich-heading,
+.blog-toc li a,
+.usluga-faq-pytanie {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
 .blog-sidebar {
   position: sticky;
   top: 100px;

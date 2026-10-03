@@ -19,6 +19,16 @@ const KORZEN = process.cwd();
 
 const uslugi = (await import('../src/data/uslugi.js')).default;
 const artykuly = (await import('../src/data/blogArticles.js')).default;
+// Strażnik tytułów i dat wpisów: <title> powyżej 60 znaków Google ucina,
+// a Article bez datePublished Google zgłasza jako błąd danych strukturalnych.
+{
+  const { tytulSeoBloga, LIMIT_TYTULU } = await import('../src/data/blogArticles.js');
+  for (const a of artykuly) {
+    const t = tytulSeoBloga(a);
+    if (t.length > LIMIT_TYTULU) throw new Error(`Tytuł wpisu ${a.slug} ma ${t.length} znaków (limit ${LIMIT_TYTULU}): ${t}`);
+    if (!a.datePublished) throw new Error(`Wpis ${a.slug} nie ma datePublished`);
+  }
+}
 
 const dzis = new Date().toISOString().slice(0, 10);
 

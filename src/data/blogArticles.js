@@ -1,6 +1,9 @@
 const blogArticles = [
     {
         "slug": "klimatyzacja-do-domu-jak-wybrac",
+        "seoTitle": "Jak wybrać klimatyzację do domu? Poradnik",
+        "datePublished": "2026-03-05",
+        "dateModified": "2026-09-21",
         "title": "Jak wybrać klimatyzację do domu? Praktyczny poradnik",
         "category": "Klimatyzacja",
         "excerpt": "Dobór klimatyzacji do domu to kluczowa decyzja. Podpowiadamy, na co zwrócić uwagę przy wyborze klimatyzatora do mieszkania i domu jednorodzinnego w Raciborzu.",
@@ -48,6 +51,9 @@ const blogArticles = [
     },
     {
         "slug": "klimatyzacja-lg-rotenso-mitsubishi-porownanie",
+        "seoTitle": "LG, Rotenso czy Mitsubishi? Porównanie klimatyzacji",
+        "datePublished": "2026-03-05",
+        "dateModified": "2026-09-21",
         "title": "LG, Rotenso czy Mitsubishi — którą markę klimatyzacji wybrać?",
         "category": "Klimatyzacja",
         "excerpt": "Porównanie trzech czołowych marek klimatyzacji dostępnych w naszym salonie w Raciborzu. Dowiedz się, czym się różnią i która będzie najlepsza dla Ciebie.",
@@ -96,6 +102,9 @@ const blogArticles = [
     },
     {
         "slug": "jak-oszczedzac-na-klimatyzacji",
+        "seoTitle": "Jak oszczędzać na klimatyzacji? 7 sposobów",
+        "datePublished": "2026-03-05",
+        "dateModified": "2026-09-21",
         "title": "Jak oszczędzać na klimatyzacji? 7 sprawdzonych sposobów",
         "category": "Porady",
         "excerpt": "Klimatyzacja nie musi generować wysokich rachunków za prąd. Poznaj 7 prostych sposobów na obniżenie kosztów użytkowania klimatyzatora.",
@@ -150,3 +159,13 @@ export const BLOG_CATEGORIES = [
 ];
 
 export default blogArticles;
+
+// <title> wpisu = seoTitle (albo title) + sufiks marki. Pełny sufiks, gdy całość
+// mieści się w 60 znakach (tyle pokazuje Google), inaczej krótki. Strażnik
+// w scripts/build-sitemap.mjs przerywa build, gdy nawet krótki się nie mieści.
+export const LIMIT_TYTULU = 60;
+export function tytulSeoBloga(a) {
+    const t = a.seoTitle || a.title;
+    const pelny = `${t} | Alaska Racibórz`;
+    return pelny.length <= LIMIT_TYTULU ? pelny : `${t} | Alaska`;
+}
