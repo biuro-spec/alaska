@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Alaska — wizytówka Google i katalogi</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 14mm 15mm; }
+
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    color: #15202b;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 19pt;
+    margin: 0 0 2mm;
+    color: #0b3c5d;
+    letter-spacing: -0.2pt;
+  }
+  .podtytul { color: #5a6b7a; font-size: 10pt; margin: 0 0 6mm; }
+
+  h2 {
+    font-size: 13pt;
+    color: #0b3c5d;
+    margin: 8mm 0 3mm;
+    padding-bottom: 1.5mm;
+    border-bottom: 2px solid #3b82f6;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 11pt;
+    margin: 5mm 0 1.5mm;
+    color: #15202b;
+    page-break-after: avoid;
+  }
+
+  p { margin: 0 0 2.5mm; }
+
+  .wstep {
+    background: #eef4fb;
+    border-left: 3px solid #3b82f6;
+    padding: 4mm 5mm;
+    margin-bottom: 6mm;
+  }
+  .wstep p:last-child { margin-bottom: 0; }
+
+  .zadanie {
+    page-break-inside: avoid;
+    margin-bottom: 5mm;
+    padding-left: 9mm;
+    position: relative;
+  }
+  .zadanie::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.6mm;
+    width: 4.5mm; height: 4.5mm;
+    border: 1.3px solid #7c8a99;
+    border-radius: 1px;
+  }
+  .zadanie h3 { margin-top: 0; }
+
+  .czas { font-weight: normal; color: #5a6b7a; font-size: 9pt; }
+
+  table { width: 100%; border-collapse: collapse; margin: 2mm 0 3mm; font-size: 9.5pt; }
+  th, td { text-align: left; padding: 1.6mm 2mm; border-bottom: 1px solid #d8e0e8; vertical-align: top; }
+  th { background: #f2f6fa; font-weight: 600; color: #0b3c5d; }
+  td.link { font-family: Consolas, monospace; font-size: 8.8pt; color: #1d4ed8; word-break: break-all; }
+
+  .zle { color: #b91c1c; font-weight: 600; }
+  .dobrze { color: #15803d; font-weight: 600; }
+
+  .qa { page-break-inside: avoid; margin-bottom: 3.5mm; }
+  .qa .p { font-weight: 600; color: #0b3c5d; }
+  .qa .o { margin: 0.5mm 0 0; }
+
+  .uwaga {
+    background: #fff8e6;
+    border-left: 3px solid #d97706;
+    padding: 3mm 4mm;
+    margin: 3mm 0;
+    font-size: 9.5pt;
+  }
+
+  .zrobione { font-size: 9.5pt; color: #2c3e50; }
+  .zrobione li { margin-bottom: 1.2mm; }
+
+  .wynik {
+    display: flex;
+    gap: 4mm;
+    margin: 3mm 0 4mm;
+    page-break-inside: avoid;
+  }
+  .wynik div {
+    flex: 1;
+    background: #f1f8f4;
+    border: 1px solid #c3e2cf;
+    border-radius: 3px;
+    padding: 3mm;
+    text-align: center;
+  }
+  .wynik .liczba { font-size: 17pt; font-weight: 700; color: #15803d; line-height: 1.1; }
+  .wynik .opis { font-size: 8.5pt; color: #4a5b68; }
+
+  .stopka {
+    margin-top: 8mm;
+    padding-top: 3mm;
+    border-top: 1px solid #d8e0e8;
+    font-size: 8.5pt;
+    color: #7c8a99;
+  }
+  ul { margin: 1mm 0 2.5mm; padding-left: 5mm; }
+  li { margin-bottom: 1mm; }
+</style>
+</head>
+<body>
+
+<h1>Alaska — wizytówka Google i katalogi firm</h1>
+<p class="podtytul">Lista zadań dla Rafała &middot; 3 października 2026</p>
+
+<div class="wstep">
+  <p><strong>O co chodzi.</strong> Strona alaskarp.pl została we wrześniu przebudowana:
+  doszło dziewięć osobnych stron, po jednej na każdą usługę. Wcześniej wszystko było
+  na jednej stronie głównej i przez to Alaska wyświetlała się w Google dopiero
+  w okolicach dziewiątej pozycji, czyli na końcu pierwszej strony wyników.</p>
+
+  <p><strong>Czego teraz brakuje.</strong> Sama strona to połowa sprawy. Przy firmach
+  takich jak Alaska ludzie klikają przede wszystkim w <strong>mapkę Google</strong>,
+  a nie w zwykłe wyniki. Widać to po liczbach: na hasło „zakład chłodniczy Racibórz”
+  Alaska jest na <strong>pierwszym miejscu</strong> i przez trzy miesiące nie dostała
+  z tego ani jednego wejścia — bo wejścia zabrała mapka.</p>
+
+  <p><strong>Poniższe zadania dotyczą właśnie mapki i katalogów firm.</strong> Nie da
+  się ich zrobić z poziomu strony internetowej — wymagają zalogowania i telefonów.
+  Zajmą około godziny. <strong>To jest ostatnia brakująca część</strong> — po stronie
+  internetowej wszystko jest już zrobione (podsumowanie na końcu).</p>
+</div>
+
+<h2>Część A — wizytówka Google</h2>
+
+<p>Wchodzisz na <strong>google.com/business</strong> i logujesz się kontem, na które
+założona jest wizytówka Alaski.</p>
+
+<div class="zadanie">
+  <h3>1. Sprawdź kategorię firmy <span class="czas">— 5 minut, najważniejszy punkt na liście</span></h3>
+  <p>Kategoria decyduje o tym, przy jakich hasłach Google w ogóle pokaże Alaskę na mapce.
+  Liczy się bardziej niż cokolwiek na stronie internetowej.</p>
+  <p><strong>Kategoria główna</strong> powinna dotyczyć klimatyzacji — np. „Usługi
+  klimatyzacyjne” albo „Wykonawca instalacji HVAC”. Jeśli jest ustawione coś ogólnego
+  w rodzaju „Firma budowlana”, zmień.</p>
+  <p><strong>Dodaj kategorie dodatkowe</strong> (można mieć kilka):</p>
+  <ul>
+    <li>Serwis klimatyzacji</li>
+    <li>Chłodnictwo / urządzenia chłodnicze</li>
+    <li>Wentylacja</li>
+    <li>Pompy ciepła</li>
+    <li>Wypożyczalnia sprzętu</li>
+  </ul>
+</div>
+
+<div class="zadanie">
+  <h3>2. Sprawdź adres i telefony <span class="czas">— 5 minut</span></h3>
+  <p>Adres w wizytówce musi być <strong>dokładnie taki sam</strong> jak na stronie.
+  Google porównuje te zapisy i gdy się różnią, obniża pozycję firmy na mapce.</p>
+  <table>
+    <tr><th style="width:32%">Pole</th><th>Ma być</th></tr>
+    <tr><td>Adres</td><td><strong>ul. 1 Maja 4, 47-400 Racibórz</strong></td></tr>
+    <tr><td>Telefon główny</td><td>607 044 336 (serwis)</td></tr>
+    <tr><td>Telefon dodatkowy</td><td>607 376 336 (sprzedaż, Mirek)</td></tr>
+    <tr><td>E-mail</td><td>alaskarp@tlen.pl</td></tr>
+    <tr><td>Strona</td><td>https://alaskarp.pl</td></tr>
+    <tr><td>Godziny</td><td>poniedziałek–piątek 8:00–17:00</td></tr>
+  </table>
+</div>
+
+<div class="zadanie">
+  <h3>3. Wpisz usługi wraz z linkami <span class="czas">— 20 minut</span></h3>
+  <p>W wizytówce jest sekcja „Usługi”. Każda usługa może mieć własny link. Poniższe
+  adresy to nowe strony, po jednej na usługę.</p>
+  <table>
+    <tr><th style="width:40%">Nazwa usługi</th><th>Link</th></tr>
+    <tr><td>Montaż klimatyzacji</td><td class="link">alaskarp.pl/montaz-klimatyzacji-raciborz</td></tr>
+    <tr><td>Serwis klimatyzacji</td><td class="link">alaskarp.pl/serwis-klimatyzacji-raciborz</td></tr>
+    <tr><td>Czyszczenie i odgrzybianie</td><td class="link">alaskarp.pl/czyszczenie-klimatyzacji-raciborz</td></tr>
+    <tr><td>Nabijanie klimatyzacji</td><td class="link">alaskarp.pl/nabijanie-klimatyzacji-raciborz</td></tr>
+    <tr><td>Pompy ciepła</td><td class="link">alaskarp.pl/pompy-ciepla-raciborz</td></tr>
+    <tr><td>Wentylacja i rekuperacja</td><td class="link">alaskarp.pl/wentylacja-raciborz</td></tr>
+    <tr><td>Wypożyczalnia klimatyzatorów</td><td class="link">alaskarp.pl/wypozyczalnia-klimatyzatorow-raciborz</td></tr>
+    <tr><td>Chłodnictwo przemysłowe</td><td class="link">alaskarp.pl/chlodnictwo-przemyslowe-raciborz</td></tr>
+    <tr><td>Klimatyzacja — strona zbiorcza</td><td class="link">alaskarp.pl/klimatyzacja-raciborz</td></tr>
+  </table>
+</div>
+
+<div class="zadanie">
+  <h3>4. Dodaj zdjęcia <span class="czas">— 10 minut, potem raz w miesiącu</span></h3>
+  <p>Wizytówki z nowymi zdjęciami wyświetlają się wyżej. Zdjęcia realizacji macie już
+  w panelu na stronie (<span class="link">alaskarp.pl/panel</span>) — te same można wrzucić na wizytówkę.</p>
+  <p>Warto mieć: zdjęcie szyldu i wejścia, 3–5 zdjęć zamontowanych urządzeń, zdjęcie
+  samochodu serwisowego, zdjęcie zespołu.</p>
+</div>
+
+<h2 style="page-break-before: always;">Część B — pytania i odpowiedzi w wizytówce</h2>
+
+<p>W wizytówce jest sekcja „Pytania i odpowiedzi”. Właściciel może <strong>sam zadać
+pytanie i sam na nie odpowiedzieć</strong> — to normalna praktyka i Google na nią pozwala.
+Dzięki temu klient widzi odpowiedź, zanim zadzwoni.</p>
+
+<p>Poniższe teksty są gotowe do przepisania. Pochodzą ze strony internetowej, więc
+treść jest spójna.</p>
+
+<div class="qa">
+  <p class="p">Czy wycena klimatyzacji jest płatna?</p>
+  <p class="o">Nie. Wizja lokalna, dobór mocy urządzenia i wycena na terenie Raciborza
+  i okolic są bezpłatne i niezobowiązujące.</p>
+</div>
+
+<div class="qa">
+  <p class="p">Ile trwa montaż klimatyzacji?</p>
+  <p class="o">Standardowy montaż pojedynczego klimatyzatora split zamykamy w jeden
+  dzień roboczy. System multi-split na kilka pomieszczeń zajmuje zwykle dwa dni.</p>
+</div>
+
+<div class="qa">
+  <p class="p">Czy serwisujecie klimatyzację zamontowaną przez inną firmę?</p>
+  <p class="o">Tak. Obsługujemy urządzenia wszystkich marek niezależnie od tego,
+  kto wykonywał montaż.</p>
+</div>
+
+<div class="qa">
+  <p class="p">Jak często trzeba serwisować klimatyzację?</p>
+  <p class="o">Zalecamy dwa przeglądy w roku — przed sezonem letnim i po jego
+  zakończeniu. Dzięki temu urządzenie zachowuje wydajność, a parownik nie staje się
+  siedliskiem pleśni.</p>
+</div>
+
+<div class="qa">
+  <p class="p">Czy można tylko dobić czynnik chłodniczy, bez szukania wycieku?</p>
+  <p class="o">Technicznie tak, ale nie polecamy i mówimy o tym wprost. Układ jest
+  zamknięty — jeśli czynnika ubyło, to gdzieś ucieka i ucieknie znowu, zwykle
+  w ciągu jednego sezonu.</p>
+</div>
+
+<div class="qa">
+  <p class="p">Czy klimatyzacja może grzać zimą?</p>
+  <p class="o">Tak. Klimatyzatory inwerterowe działają jako pompa ciepła
+  powietrze-powietrze i skutecznie ogrzewają pomieszczenie nawet przy −15°C na zewnątrz.</p>
+</div>
+
+<div class="qa">
+  <p class="p">Czy do montażu klimatyzacji w bloku potrzebna jest zgoda?</p>
+  <p class="o">Tak, w budynku wielorodzinnym potrzebna jest zgoda spółdzielni lub
+  wspólnoty, a przy budynkach zabytkowych dodatkowo uzgodnienie z konserwatorem.
+  Podpowiadamy, jak taki wniosek sformułować.</p>
+</div>
+
+<div class="qa">
+  <p class="p">Czy wynajmujecie klimatyzatory na wesele lub event?</p>
+  <p class="o">Tak, prowadzimy wypożyczalnię klimatyzatorów przenośnych od 3,5 do 15 kW.
+  Dowozimy, ustawiamy i pokazujemy obsługę. Wynajem od jednego dnia do całego sezonu.</p>
+</div>
+
+<h2>Część C — poprawa adresu w katalogach firm</h2>
+
+<p>W internetowych katalogach branżowych figuruje <span class="zle">stary adres</span>.
+Google zestawia te wpisy ze sobą i gdy się różnią, traktuje dane firmy jako niepewne —
+co obniża pozycję na mapce.</p>
+
+<table>
+  <tr><th style="width:28%">Katalog</th><th style="width:30%">Co tam jest teraz</th><th>Co ma być</th></tr>
+  <tr><td>chlodnictwo.biz</td><td class="zle">Rudzka 53/18</td><td class="dobrze">ul. 1 Maja 4</td></tr>
+  <tr><td>klimatyzacja.biz</td><td class="zle">Rudzka 53/18</td><td class="dobrze">ul. 1 Maja 4</td></tr>
+  <tr><td>wentylacja.biz</td><td class="zle">Rudzka 53/18</td><td class="dobrze">ul. 1 Maja 4</td></tr>
+  <tr><td>Panorama Firm</td><td class="zle">Bosacka 52</td><td class="dobrze">ul. 1 Maja 4</td></tr>
+  <tr><td>pkt.pl</td><td>do sprawdzenia</td><td class="dobrze">ul. 1 Maja 4</td></tr>
+  <tr><td>biznesfinder.pl</td><td>do sprawdzenia</td><td class="dobrze">ul. 1 Maja 4</td></tr>
+  <tr><td>firmy.net</td><td>do sprawdzenia</td><td class="dobrze">ul. 1 Maja 4</td></tr>
+</table>
+
+<p>Na każdej z tych stron jest zwykle odnośnik „To moja firma”, „Zgłoś zmianę danych”
+albo „Aktualizuj wpis”. Przy okazji warto sprawdzić telefon i adres strony.</p>
+
+<div class="uwaga">
+  <strong>Przy okazji telefonu:</strong> w katalogach bywa podany tylko jeden numer.
+  Dopisz oba — 607 044 336 (serwis) i 607 376 336 (sprzedaż) — oraz adres strony
+  alaskarp.pl. Wpisy z pełnymi danymi liczą się dla Google bardziej niż same nazwy.
+</div>
+
+<h2>Co jest już zrobione po stronie internetowej</h2>
+
+<p class="zrobione">Nie wymaga niczego z Twojej strony — informacja, żeby było wiadomo,
+na czym stoimy. Stan na 3 października.</p>
+
+<p class="zrobione"><strong>Wrzesień — struktura strony:</strong></p>
+<ul class="zrobione">
+  <li>Dziewięć nowych stron: osobno montaż, serwis, czyszczenie, nabijanie, pompy ciepła,
+      wentylacja, wypożyczalnia, chłodnictwo przemysłowe i klimatyzacja ogólnie.</li>
+  <li>Stare adresy z dawnej wersji serwisu przekierowane na nowe, żeby nikt
+      nie trafiał w pustkę.</li>
+  <li>Strona jest teraz czytelna dla wyszukiwarek także wtedy, gdy nie uruchamiają
+      programów — wcześniej część z nich widziała pustą stronę.</li>
+  <li>Mapa witryny wysłana do Google i przyjęta.</li>
+  <li>Blog uporządkowany: z szesnastu krótkich wpisów zostały trzy osobne tematy,
+      reszta przeniosła się na strony usługowe. Google nie chciał indeksować
+      tych krótkich — były za ubogie.</li>
+</ul>
+
+<p class="zrobione"><strong>Październik — szybkość strony.</strong> Strona na telefonie
+ładowała się ponad cztery razy wolniej, niż powinna. Przyczyną były ikony i czcionki
+ściągane z obcych serwerów — prawie pół megabajta przy każdym wejściu. Teraz wszystko
+jest na naszym serwerze i w wersjach przyciętych do tego, co strona faktycznie
+rysuje. Ocena Google:</p>
+
+<div class="wynik">
+  <div><div class="liczba">66&nbsp;→&nbsp;96</div><div class="opis">szybkość na telefonie<br>(w skali do 100)</div></div>
+  <div><div class="liczba">4,8&nbsp;→&nbsp;1,5&nbsp;s</div><div class="opis">czas do pokazania<br>pierwszej treści</div></div>
+  <div><div class="liczba">100</div><div class="opis">dostępność, SEO<br>i dobre praktyki</div></div>
+</div>
+
+<p class="zrobione">To ma znaczenie nie tylko dla wygody klienta — Google bierze
+szybkość pod uwagę przy ustalaniu kolejności wyników, a większość osób szuka
+klimatyzacji z telefonu.</p>
+
+<div class="uwaga">
+  <strong>Uwaga o cenach na stronie.</strong> Na stronie o montażu podane są kwoty
+  orientacyjne: pojedynczy klimatyzator split z montażem 3 500–7 000 zł, multi-split
+  na 2–3 pomieszczenia 8 000–15 000 zł. Zostały przepisane z wcześniejszych materiałów
+  firmy. <strong>Proszę o potwierdzenie, czy są aktualne</strong> — jeśli nie, podaj
+  właściwe widełki, poprawimy.
+</div>
+
+<div class="stopka">
+  Przygotowane 3 października 2026 &middot; strona alaskarp.pl &middot;
+  pytania: Mariusz
+</div>
+
+</body>
+</html>
